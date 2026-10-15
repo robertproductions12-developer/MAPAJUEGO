@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Isla de Patmos – Apocalipsis</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+:root{--oro:#e8c56a;--oro2:#a9801f;--piedra:#d9cfc0;--fondo:#0a0705;--fuego:#e2561b;
+--titulo:"Cinzel","Trajan Pro",Georgia,serif;--texto:"Lora",Georgia,serif;color-scheme:dark}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;background:var(--fondo);color:var(--piedra);font-family:var(--texto);overflow:hidden}
+button,a{font-family:var(--titulo);cursor:pointer}
+:focus-visible{outline:3px solid var(--oro);outline-offset:3px}
+.btn{display:inline-block;text-decoration:none;text-align:center;border:0;border-radius:999px;padding:16px 34px;font-weight:800;letter-spacing:.08em;font-size:clamp(14px,3.6vw,17px);color:#2a1a05;background:linear-gradient(180deg,#f6dc8e,#c99a2e 55%,#9a7220);box-shadow:0 6px 22px #e8c56a33}
+.btn.hueco{background:transparent;color:var(--oro);border:2px solid var(--oro2);box-shadow:0 0 18px #e8c56a22}
+.btn:active{transform:scale(.97)}
+
+/* PORTADA */
+#portada{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:14px;padding:24px 24px calc(48px + env(safe-area-inset-bottom));background:#000;transition:opacity .9s,visibility .9s}
+#portada.fuera{opacity:0;visibility:hidden}
+#portada img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#portada::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#000c)}
+#portada .btn{position:relative;z-index:2;width:min(340px,100%)}
+#tituloRespaldo{display:none;position:absolute;top:30%;z-index:1;text-align:center;font:800 clamp(40px,12vw,110px)/1 var(--titulo);color:var(--piedra);text-shadow:0 4px 0 #6b5b45,0 0 40px #e2561b66}
+#tituloRespaldo small{display:block;font-size:.3em;color:var(--fuego);letter-spacing:.3em;margin-top:10px}
+
+/* MAPA */
+#mapa{position:fixed;inset:0;touch-action:none;cursor:grab;overflow:hidden;background:radial-gradient(circle at 50% 50%,#0f6f86 0,#0a4a5f 35%,#052a39 65%,#02141d)}
+#mapa.arrastra{cursor:grabbing}
+#agua{position:absolute;inset:-50%;opacity:.28;mix-blend-mode:screen;background:
+ repeating-radial-gradient(ellipse at 30% 40%,transparent 0 38px,#9fe7f5 40px,transparent 44px),
+ repeating-radial-gradient(ellipse at 70% 60%,transparent 0 54px,#6fd0e6 56px,transparent 60px);background-size:420px 300px,520px 380px;animation:aguaM 40s linear infinite}
+@keyframes aguaM{to{background-position:420px 300px,-520px 380px}}
+#mundo{position:absolute;left:50%;top:50%;width:1800px;height:1800px;margin:-900px 0 0 -900px;will-change:transform}
+#mundo svg{position:absolute;inset:0;width:100%;height:100%}
+.espuma{animation:esp 6s ease-in-out infinite;transform-origin:900px 900px}
+@keyframes esp{50%{opacity:.35;transform:scale(1.012)}}
+.bandera{position:absolute;width:0;height:0;border:0;background:none;padding:0}
+.giro{position:absolute;left:0;top:0;transform-origin:0 0}
+.mastil{position:absolute;left:-3px;top:-92px;width:6px;height:96px;border-radius:3px;background:linear-gradient(90deg,#7a5a2a,#e8c56a,#7a5a2a);box-shadow:2px 3px 6px #0008}
+.tela{position:absolute;left:3px;top:-90px;width:64px;height:42px;transform-origin:0 50%;background:linear-gradient(135deg,var(--fuego),#a3280c);border:2px solid var(--oro);border-left:0;border-radius:0 6px 6px 0;display:flex;align-items:center;justify-content:center;font:800 20px var(--titulo);color:#fff4d6;text-shadow:0 2px 3px #000a;animation:ondea 1.6s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes ondea{0%,100%{transform:skewY(-6deg) scaleX(1)}50%{transform:skewY(7deg) scaleX(.92)}}
+.nombre{position:absolute;left:0;top:14px;transform:translateX(-50%);white-space:nowrap;text-align:center;background:#000c;border:1px solid var(--oro2);border-radius:10px;padding:4px 12px;line-height:1.25}
+.nombre b{display:block;font:800 14px var(--titulo);color:var(--oro);letter-spacing:.12em}
+.nombre em{display:block;font:italic 12px var(--texto);color:var(--piedra)}
+.base{position:absolute;left:-16px;top:-6px;width:32px;height:14px;border-radius:50%;background:radial-gradient(#000a,transparent 70%)}
+.bandera:before{content:"";position:absolute;left:-60px;top:-100px;width:150px;height:150px}
+.bandera:hover .tela,.bandera:focus-visible .tela{filter:brightness(1.3)}
+.bandera.hecho .tela{background:linear-gradient(135deg,#2c9a63,#14583a)}
+/* explorador */
+.pj{position:absolute;width:0;height:0;pointer-events:none}
+.pj .sombra{position:absolute;left:-26px;top:-7px;width:52px;height:14px;border-radius:50%;background:radial-gradient(#000c,transparent 70%)}
+.pj .flip{position:absolute;left:-26px;top:-134px;width:52px;height:134px}
+.pj img{width:100%;height:100%;display:block;transform-origin:50% 100%;animation:resp 3s ease-in-out infinite;filter:drop-shadow(0 4px 4px #0008)}
+.pj img.corre{animation:corre .3s ease-in-out infinite}
+@keyframes resp{50%{transform:scaleY(1.015)}}
+@keyframes corre{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-9px) rotate(5deg)}}
+/* cine */
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 45%,#000b 100%),linear-gradient(160deg,#ffb35a2e,transparent 45%,#1a3a8a2a)}
+.grano{position:absolute;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.nube{position:absolute;pointer-events:none;width:60vmax;height:22vmax;border-radius:50%;background:radial-gradient(#ffffff55,transparent 70%);filter:blur(24px);opacity:.5;animation:nube 90s linear infinite}
+.nube.n2{top:55%;animation-duration:130s;animation-delay:-40s;opacity:.35}
+@keyframes nube{from{left:-70vmax}to{left:110vw}}
+.barra{position:fixed;left:0;right:0;height:0;background:#000;z-index:25;transition:height 1.2s}
+.barra.t{top:0}.barra.b{bottom:0}
+body.cine .barra{height:12vh}
+#cineT{position:fixed;z-index:26;left:0;right:0;bottom:17vh;text-align:center;font:800 clamp(26px,8vw,60px) var(--titulo);color:var(--piedra);text-shadow:0 3px 0 #6b5b45,0 0 30px #e2561b88;opacity:0;pointer-events:none;transition:opacity 1.2s}
+#cineT small{display:block;font-size:.3em;color:var(--fuego);letter-spacing:.35em}
+#cineT.v{opacity:1}
+#hud,#ctrl,#ctrl2,#ayuda{transition:opacity .8s}
+body.cine #hud,body.cine #ctrl,body.cine #ctrl2,body.cine #ayuda{opacity:0;pointer-events:none}
+#hud{position:fixed;z-index:10;left:0;right:0;top:0;display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:calc(12px + env(safe-area-inset-top)) 14px 12px;pointer-events:none;background:linear-gradient(#000b,transparent)}
+#hud>*{pointer-events:auto}
+#hud h2{font:800 clamp(16px,4.5vw,26px) var(--titulo);color:var(--piedra);text-shadow:0 2px 0 #6b5b45;line-height:1.1}
+#hud h2 small{display:block;font-size:.55em;color:var(--fuego);letter-spacing:.25em}
+#hud .btn{padding:10px 20px;font-size:14px}
+#ctrl,#ctrl2{position:fixed;z-index:10;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;gap:8px}
+#ctrl{right:12px;flex-direction:column}#ctrl2{left:12px}
+#ctrl button,#ctrl2 button{width:48px;height:48px;border-radius:50%;border:2px solid var(--oro2);background:#120b06dd;color:var(--oro);font-size:22px}
+#ayuda{position:fixed;z-index:9;left:50%;transform:translateX(-50%);bottom:calc(22px + env(safe-area-inset-bottom));font-size:13px;color:#d9cfc0cc;background:#000a;padding:6px 14px;border-radius:999px;text-align:center;pointer-events:none;width:max-content;max-width:44vw}
+@media(max-width:600px){#ayuda{display:none}}
+
+/* PANEL */
+#panel{--bg:#120b06;--tx:#d9cfc0;--card:#1b110a;--bd:#a9801f;--tt:#d9cfc0;--fs:19px;--ff:var(--texto);--hl:#e8c56a44;--ac:#e8c56a;
+position:fixed;inset:0;z-index:20;display:none;overflow-y:auto;background:radial-gradient(circle at 50% 0,#3a2312,var(--bg) 70%);color:var(--tx);padding:calc(18px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
+#panel.t-claro{--bg:#f6f1e6;--tx:#2b2118;--card:#fffdf8;--bd:#b8923a;--tt:#3a2a14;--hl:#e8c56a77;--ac:#8a5a00;background:var(--bg)}
+#panel.t-estudio{--bg:#e8d6ac;--tx:#33250f;--card:#f2e4c0;--bd:#8a6a2f;--tt:#33250f;--hl:#d6a93a77;--ac:#7a4a00;background:var(--bg)}
+#panel.abierto{display:block;animation:entra .35s ease-out}
+@keyframes entra{from{opacity:0;transform:scale(.97)}}
+.caja{max-width:860px;margin:0 auto}
+.caja h1{font:800 clamp(24px,6vw,42px)/1.1 var(--titulo);color:var(--tt);margin-bottom:6px}
+.caja .ref{color:var(--fuego);font:600 14px var(--titulo);letter-spacing:.15em;margin-bottom:14px}
+.marco{border:2px solid var(--bd);border-radius:14px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
+.marco video{width:100%;height:100%;display:block;background:#000}
+.marco p{padding:20px;text-align:center;color:#d9cfc0cc}
+.barraH{position:sticky;top:-18px;z-index:3;background:var(--bg);padding-top:14px}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;padding:12px 4px;font:800 clamp(11px,3vw,14px) var(--titulo);color:var(--ac);background:var(--card);border:2px solid var(--bd);border-bottom:0;border-radius:12px 12px 0 0}
+.tabs button[aria-selected=true]{color:#2a1a05;background:linear-gradient(180deg,#f6dc8e,#b98a28)}
+.herr{display:flex;flex-wrap:wrap;gap:6px;padding:8px;background:var(--card);border:2px solid var(--bd);border-bottom:0}
+.herr button{flex:1 1 auto;min-width:44px;padding:10px 8px;border-radius:10px;border:1.5px solid var(--bd);background:transparent;color:var(--ac);font:700 13px var(--titulo)}
+.herr button.on{background:var(--ac);color:var(--card)}
+#aj{display:none;gap:8px;flex-wrap:wrap;padding:10px 8px;background:var(--card);border:2px solid var(--bd);border-bottom:0;align-items:center}
+#aj.v{display:flex}#aj span{font:600 12px var(--titulo);color:var(--ac)}
+#aj button{padding:8px 12px;border-radius:10px;border:1.5px solid var(--bd);background:transparent;color:var(--ac);font:700 13px var(--titulo)}
+#aj button.on{background:var(--ac);color:var(--card)}
+.lectura{border:2px solid var(--bd);border-radius:0 0 14px 14px;background:var(--card);padding:18px clamp(12px,4vw,32px);font:var(--fs)/1.8 var(--ff)}
+.lectura p{margin:0 0 .5em;padding:8px 10px;border-radius:8px;max-width:72ch;cursor:pointer;border-left:4px solid transparent;transition:background .2s}
+.lectura p.sel{outline:2px dashed var(--ac);background:#e8c56a22}
+.lectura p.marc{background:var(--hl);border-left-color:var(--ac)}
+.lectura p.marc::before{content:"★ ";color:var(--ac)}
+.lectura p.leyendo{box-shadow:0 0 0 2px var(--fuego)}
+.lectura small{display:block;font:600 11px var(--titulo);color:var(--ac);letter-spacing:.1em}
+.lectura .vacio{color:inherit;opacity:.7;font-style:italic;cursor:default}
+.t-estudio .lectura{line-height:2.05}.t-estudio .lectura p{text-align:justify;hyphens:auto}
+.pie{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+#toast{position:fixed;z-index:50;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000e;color:var(--oro);border:1px solid var(--oro2);padding:10px 18px;border-radius:999px;font:600 13px var(--titulo);opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center}
+#toast.v{opacity:1}
+@media(prefers-reduced-motion:reduce){.tela,.pj img,.nube,#agua,.espuma{animation:none!important}}
+</style>
+</head>
+<body>
+
+<section id="portada">
+  <img src="portada.png" alt="Isla de Patmos – Apocalipsis" onerror="this.remove();document.getElementById('tituloRespaldo').style.display='block'">
+  <div id="tituloRespaldo">ISLA DE PATMOS<small>APOCALIPSIS</small></div>
+  <button class="btn" id="entrar">ENTRAR EN LA ISLA</button>
+</section>
+
+<main id="mapa" aria-label="Mapa de la Isla de Patmos">
+  <div id="agua"></div>
+  <div id="mundo"></div>
+  <div class="nube"></div><div class="nube n2"></div>
+  <div class="vig"></div><div class="grano"></div>
+</main>
+<div class="barra t"></div><div class="barra b"></div>
+<div id="cineT">ISLA DE PATMOS<small>APOCALIPSIS</small></div>
+<header id="hud">
+  <h2>ISLA DE PATMOS<small>APOCALIPSIS</small></h2>
+  <a class="btn hueco" id="regresar" href="#">REGRESAR</a>
+</header>
+<div id="ctrl2"><button id="rotI" aria-label="Girar a la izquierda">⟲</button><button id="rotD" aria-label="Girar a la derecha">⟳</button></div>
+<div id="ctrl"><button id="zmas" aria-label="Acercar">+</button><button id="zmenos" aria-label="Alejar">−</button></div>
+<div id="ayuda">Toca una bandera y el explorador correrá hasta ella · arrastra y gira el mapa</div>
+
+<section id="panel">
+  <div class="caja">
+    <h1 id="pTitulo"></h1><div class="ref" id="pRef"></div>
+    <div class="marco" id="pVideo"></div>
+    <div class="barraH">
+      <div class="tabs" role="tablist">
+        <button role="tab" id="tB">BIBLIA</button>
+        <button role="tab" id="tC">EL CONFLICTO</button>
+        <button role="tab" id="tM">★ MARCADOS</button>
+      </div>
+      <div class="herr">
+        <button id="bOir" aria-label="Escuchar">🔊 Escuchar</button>
+        <button id="bParo" aria-label="Detener voz">⏹</button>
+        <button id="bVel" aria-label="Velocidad de voz">1×</button>
+        <button id="bMarc">★ Marcar</button>
+        <button id="bWa">WhatsApp</button>
+        <button id="bAj" aria-label="Ajustes de lectura">Aa</button>
+      </div>
+      <div id="aj">
+        <span>Letra</span><button id="sMenos">A−</button><button id="sMas">A+</button>
+        <button id="fSerif">Serif</button><button id="fSans">Sans</button>
+        <span>Modo</span><button id="mOsc">Oscuro</button><button id="mCla">Claro</button><button id="mEst">Estudio</button>
+      </div>
+    </div>
+    <article class="lectura" id="pTexto"></article>
+    <div class="pie">
+      <button class="btn" id="volver">VOLVER AL MAPA</button>
+      <button class="btn hueco" id="sig">SIGUIENTE NIVEL</button>
+    </div>
+  </div>
+</section>
+<div id="toast"></div>
+
+<script>
+/* ============ CONFIGURACIÓN (edita aquí) ============ */
+const REGRESAR_URL = "https://robertproductions12-developer.github.io/BATALLADANIEL/";
+const NIVELES = [
+ {n:"La visión de Patmos",      ref:"Apocalipsis 1",     video:"videos/nivel1.mp4",  biblia:``, conflicto:``},
+
+ {n:"Las siete iglesias",       ref:"Apocalipsis 2–3",   video:"videos/nivel2.mp4",  biblia:``, conflicto:``},
+
+ {n:"El trono y el Cordero",    ref:"Apocalipsis 4–5",   video:"videos/nivel3.mp4",  biblia:``, conflicto:``},
+
+ {n:"Los siete sellos",         ref:"Apocalipsis 6",     video:"videos/nivel4.mp4",  biblia:``, conflicto:``},
+
+ {n:"Los sellados",             ref:"Apocalipsis 7",     video:"videos/nivel5.mp4",  biblia:``, conflicto:``},
+
+ {n:"Las siete trompetas",      ref:"Apocalipsis 8–9",   video:"videos/nivel6.mp4",  biblia:``, conflicto:``},
+
+ {n:"El librito y los dos testigos", ref:"Apocalipsis 10–11", video:"videos/nivel7.mp4", biblia:``, conflicto:``},
+
+ {n:"La mujer y el dragón",     ref:"Apocalipsis 12",    video:"videos/nivel8.mp4",  biblia:``, conflicto:``},
+
+ {n:"Las dos bestias",          ref:"Apocalipsis 13–14", video:"videos/nivel9.mp4",  biblia:``, conflicto:``},
+
+ {n:"Las siete plagas",         ref:"Apocalipsis 15–16", video:"videos/nivel10.mp4", biblia:``, conflicto:``},
+
+ {n:"Babilonia",                ref:"Apocalipsis 17–18", video:"videos/nivel11.mp4", biblia:``, conflicto:``},
+ 
+ {n:"Cristo viene y la nueva Jerusalén", ref:"Apocalipsis 19–22", video:"videos/nivel12.mp4", biblia:``, conflicto:``}
+];
+const EXPLORADOR_IMG = "explorador.png";
+/* ====================================================== */
+
+const $=id=>document.getElementById(id),W=1800,C=900,PI=Math.PI;
+const mapa=$("mapa"),mundo=$("mundo");
+$("regresar").href=REGRESAR_URL;
+const guarda=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const lee=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+function toast(t){const e=$("toast");e.textContent=t;e.classList.add("v");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("v"),2200)}
+
+/* --- Isla realista (SVG con relieve y costa irregular) --- */
+function blob(r,k){const p=[];for(let i=0;i<48;i++){const a=i/48*PI*2;
+ const rr=r*(1+.09*Math.sin(3*a+1)+.06*Math.sin(5*a+2)+.04*Math.sin(9*a))*k;p.push([C+rr*Math.cos(a),C+rr*Math.sin(a)])}
+ let d="M"+((p[0][0]+p[47][0])/2)+" "+((p[0][1]+p[47][1])/2);
+ for(let i=0;i<48;i++){const a=p[i],b=p[(i+1)%48];d+=`Q${a[0]} ${a[1]} ${(a[0]+b[0])/2} ${(a[1]+b[1])/2}`}return d+"Z"}
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+let s=`<svg viewBox="0 0 ${W} ${W}" aria-hidden="true"><defs>
+<filter id="rug" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="46"/></filter>
+<filter id="ter" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".007" numOctaves="5" seed="9" result="n"/>
+<feColorMatrix in="n" type="matrix" values="0 0 0 0 .02  0 0 0 0 .09  0 0 0 0 .02  1.9 0 0 0 -.62" result="osc"/>
+<feColorMatrix in="n" type="matrix" values="0 0 0 0 .55  0 0 0 0 .8  0 0 0 0 .3  0 -1.8 0 0 .6" result="luz"/>
+<feComposite in="osc" in2="SourceAlpha" operator="in" result="o"/><feComposite in="luz" in2="SourceAlpha" operator="in" result="l"/>
+<feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="o"/><feMergeNode in="l"/></feMerge></filter>
+<filter id="bl"><feGaussianBlur stdDeviation="16"/></filter><filter id="bl2"><feGaussianBlur stdDeviation="3"/></filter>
+<radialGradient id="gm"><stop offset="0" stop-color="#3f9a5a"/><stop offset=".65" stop-color="#2a7a47"/><stop offset="1" stop-color="#1b5535"/></radialGradient></defs>
+<g filter="url(#bl)"><path d="${blob(690,1.2)}" fill="#35c0d4" opacity=".55"/></g>
+<path d="${blob(690,1.03)}" transform="translate(24 30)" fill="#000" opacity=".4" filter="url(#bl)"/>
+<g filter="url(#rug)"><path d="${blob(690,1.08)}" fill="#46c6d6" opacity=".7"/>
+<path class="espuma" d="${blob(690,1.04)}" fill="none" stroke="#fff" stroke-width="7" stroke-dasharray="34 16" opacity=".75"/>
+<path d="${blob(690,1)}" fill="#e8d29a"/><path d="${blob(690,.95)}" fill="#c9a866" opacity=".5"/>
+<path d="${blob(690,.9)}" fill="url(#gm)" filter="url(#ter)"/></g>`;
+[[-90,-60,150],[70,-30,190],[-10,80,130],[160,90,105],[-175,60,100]].forEach(([x,y,z])=>{const X=C+x,Y=C+y;
+ s+=`<ellipse cx="${X+z*.35}" cy="${Y+z*.62}" rx="${z*1.1}" ry="${z*.2}" fill="#000" opacity=".35" filter="url(#bl2)"/>
+ <path d="M${X-z} ${Y+z*.6}L${X} ${Y-z}L${X+z*.08} ${Y+z*.62}Z" fill="#a8a193"/>
+ <path d="M${X+z*.04} ${Y+z*.62}L${X} ${Y-z}L${X+z} ${Y+z*.6}Z" fill="#555046"/>
+ <path d="M${X-z*.3} ${Y-z*.48}L${X} ${Y-z}L${X+z*.04} ${Y-z*.55}Z" fill="#f4efe4"/><path d="M${X+z*.04} ${Y-z*.55}L${X} ${Y-z}L${X+z*.3} ${Y-z*.48}Z" fill="#b7c2d4"/>`});
+for(let i=0;i<150;i++){const a=rnd()*PI*2,r=230+rnd()*400,x=C+r*Math.cos(a),y=C+r*Math.sin(a),z=11+rnd()*14;
+ s+=`<ellipse cx="${x+6}" cy="${y+z*.8}" rx="${z}" ry="${z*.4}" fill="#000" opacity=".3"/><circle cx="${x}" cy="${y}" r="${z}" fill="#1d5a30"/><circle cx="${x-z*.3}" cy="${y-z*.3}" r="${z*.6}" fill="#3c8a4a"/>`}
+for(let i=0;i<14;i++){const a=i/14*PI*2+.2,r=610+rnd()*30;s+=`<text x="${C+r*Math.cos(a)}" y="${C+r*Math.sin(a)}" font-size="34" text-anchor="middle">🌴</text>`}
+s+="</svg>";mundo.innerHTML=s;
+
+/* --- Banderas --- */
+const pos=[];
+NIVELES.forEach((nv,i)=>{
+ const a=-PI/2+i/12*PI*2,r=(i%2?470:350)+(i%3)*25,x=C+r*Math.cos(a),y=C+r*Math.sin(a);pos.push([x,y]);
+ const b=document.createElement("button");b.className="bandera";b.style.left=x+"px";b.style.top=y+"px";
+ b.setAttribute("aria-label","Nivel "+(i+1)+": "+nv.n);
+ b.innerHTML=`<div class="giro"><i class="base"></i><i class="mastil"></i><i class="tela" style="--d:${-(i*.27).toFixed(2)}s">${i+1}</i><span class="nombre"><b>NIVEL ${i+1}</b><em>${nv.n}</em></span></div>`;
+ b.onclick=()=>{if(!moved)ir(i)};mundo.appendChild(b)});
+mundo.querySelector("svg").insertAdjacentHTML("beforeend",`<path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#6b4a22" stroke-opacity=".55" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#f0d68a" stroke-opacity=".7" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>`);
+
+/* --- Explorador --- */
+let ex=C,ey=C+640;
+const pj=document.createElement("div");pj.className="pj";
+pj.innerHTML=`<div class="giro"><i class="sombra"></i><div class="flip"><img alt="Explorador" src="${EXPLORADOR_IMG}"></div></div>`;
+mundo.appendChild(pj);const flip=pj.querySelector(".flip"),pimg=pj.querySelector("img");
+function colocaPJ(){pj.style.left=ex+"px";pj.style.top=ey+"px"}colocaPJ();
+
+/* --- Cámara --- */
+let tx=0,ty=0,rot=0,sc=.8,moved=false,ocupado=false;
+function aplica(){const m=W*sc*.5;tx=Math.max(-m,Math.min(m,tx));ty=Math.max(-m,Math.min(m,ty));sc=Math.max(.35,Math.min(2.4,sc));
+ mundo.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;
+ const k=1/Math.max(.7,sc);mundo.querySelectorAll(".giro").forEach(g=>g.style.transform=`rotate(${-rot}deg) scale(${k})`)}
+function centra(px,py){const c=Math.cos(rot*PI/180),n=Math.sin(rot*PI/180),X=px-C,Y=py-C;tx=-sc*(c*X-n*Y);ty=-sc*(n*X+c*Y)}
+const ptrs=new Map();let g0=null;
+mapa.addEventListener("pointerdown",e=>{if(ocupado){cineSkip=true;return}ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;g0=null});
+mapa.addEventListener("pointermove",e=>{if(!ptrs.has(e.pointerId))return;const o=ptrs.get(e.pointerId);
+ if(ptrs.size===1){const dx=e.clientX-o[0],dy=e.clientY-o[1];tx+=dx;ty+=dy;if(Math.abs(dx)+Math.abs(dy)>2){moved=true;mapa.classList.add("arrastra")}ptrs.set(e.pointerId,[e.clientX,e.clientY]);aplica()}
+ else if(ptrs.size===2){ptrs.set(e.pointerId,[e.clientX,e.clientY]);const[p,q]=[...ptrs.values()];
+  const ang=Math.atan2(q[1]-p[1],q[0]-p[0])*180/PI,d=Math.hypot(q[0]-p[0],q[1]-p[1]);
+  if(g0){rot+=ang-g0.a;sc*=d/g0.d;aplica()}g0={a:ang,d};moved=true}});
+const fin=e=>{ptrs.delete(e.pointerId);g0=null;mapa.classList.remove("arrastra");setTimeout(()=>moved=false,60)};
+mapa.addEventListener("pointerup",fin);mapa.addEventListener("pointercancel",fin);
+mapa.addEventListener("wheel",e=>{e.preventDefault();if(e.shiftKey)rot+=e.deltaY*.1;else sc*=e.deltaY<0?1.08:.92;aplica()},{passive:false});
+$("rotI").onclick=()=>{rot-=30;aplica()};$("rotD").onclick=()=>{rot+=30;aplica()};
+$("zmas").onclick=()=>{sc*=1.2;aplica()};$("zmenos").onclick=()=>{sc/=1.2;aplica()};
+addEventListener("keydown",e=>{if($("panel").classList.contains("abierto")){if(e.key==="Escape")cerrar();return}
+ const k={ArrowLeft:()=>tx+=60,ArrowRight:()=>tx-=60,ArrowUp:()=>ty+=60,ArrowDown:()=>ty-=60,q:()=>rot-=15,e:()=>rot+=15}[e.key];if(k){k();aplica()}});
+
+/* --- Correr hacia la bandera --- */
+function corre(x,y,fn){const dx=x-ex,dy=y-ey,d=Math.hypot(dx,dy);if(d<15)return fn();
+ const sx=Math.cos(rot*PI/180)*dx-Math.sin(rot*PI/180)*dy;flip.style.transform=`scaleX(${sx<0?-1:1})`;
+ const dur=Math.max(900,d/.4),x0=ex,y0=ey,t0=performance.now();pimg.classList.add("corre");
+ (function f(t){const k=Math.min(1,(t-t0)/dur);ex=x0+dx*k;ey=y0+dy*k;colocaPJ();
+  if(sc<1)sc+=(1.05-sc)*.04;centra(ex,ey);aplica();
+  if(k<1)requestAnimationFrame(f);else{pimg.classList.remove("corre");fn()}})(t0)}
+function ir(i){if(ocupado)return;ocupado=true;const[x,y]=pos[i];
+ corre(x+40,y+18,()=>{setTimeout(()=>{ocupado=false;abrir(i)},250)})}
+
+/* --- Cinemática de inicio --- */
+let cineSkip=false;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function cine(){ocupado=true;cineSkip=false;document.body.classList.add("cine");
+ const R0=-35,S0=.38,S1=1.3,D=6000,t0=performance.now();setTimeout(()=>$("cineT").classList.add("v"),600);setTimeout(()=>$("cineT").classList.remove("v"),3600);
+ (function f(t){let k=Math.min(1,(t-t0)/D);if(cineSkip)k=1;const e=ease(k);
+  rot=R0*(1-e);sc=S0+(S1-S0)*e;centra(C+(ex-C)*e,C+(ey-C)*e);aplica();
+  if(k<1)requestAnimationFrame(f);else{ocupado=false;document.body.classList.remove("cine");$("cineT").classList.remove("v");toast("Toca una bandera para comenzar")}})(t0)}
+$("entrar").onclick=()=>{$("portada").classList.add("fuera");rot=-35;sc=.38;tx=ty=0;aplica();cine()};
+
+/* --- Estado de lectura --- */
+let hechos=lee("patmos_hechos",[]),M=lee("patmos_marc",{}),cfg=Object.assign({sz:19,f:"serif",t:"osc"},lee("patmos_cfg",{}));
+let actual=0,tab="b",sel=new Set(),lastSel="";
+const marca=()=>mundo.querySelectorAll(".bandera").forEach((b,i)=>b.classList.toggle("hecho",hechos.includes(i)));marca();
+const partes=t=>t.trim()?t.trim().split(/\n\s*\n/):[];
+function items(){const nv=NIVELES[actual],L=[];
+ const add=(t,src,txt)=>partes(txt).forEach((p,i)=>{const k=actual+"|"+t+"|"+i;if(t==="m"||true)L.push({k,p,t,src})});
+ if(tab==="b")partes(nv.biblia).forEach((p,i)=>L.push({k:actual+"|b|"+i,p}));
+ else if(tab==="c")partes(nv.conflicto).forEach((p,i)=>L.push({k:actual+"|c|"+i,p}));
+ else{partes(nv.biblia).forEach((p,i)=>{const k=actual+"|b|"+i;if(M[k])L.push({k,p,src:"BIBLIA"})});
+  partes(nv.conflicto).forEach((p,i)=>{const k=actual+"|c|"+i;if(M[k])L.push({k,p,src:"EL CONFLICTO DE LOS SIGLOS"})})}
+ return L}
+const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\n/g,"<br>");
+function pinta(){detener();sel.clear();const L=items(),a=$("pTexto");
+ ["tB","tC","tM"].forEach((id,j)=>$(id).setAttribute("aria-selected",id==={b:"tB",c:"tC",m:"tM"}[tab]));
+ if(!L.length){a.innerHTML=`<p class="vacio">${tab==="m"?"Aún no marcaste nada. Toca un párrafo en BIBLIA o EL CONFLICTO y pulsa ★ Marcar.":"Aquí irá el texto de este nivel. Edítalo en el archivo index.html."}</p>`;return}
+ a.innerHTML=L.map(o=>`<p data-k="${o.k}" class="${M[o.k]?"marc":""}">${o.src?`<small>${o.src}</small>`:""}${esc(o.p)}</p>`).join("")}
+a:{$("pTexto").addEventListener("click",e=>{const p=e.target.closest("p[data-k]");if(!p||(getSelection()+"").length>0)return;
+ const k=p.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);p.classList.toggle("sel",sel.has(k));$("bMarc").classList.toggle("on",sel.size>0)})}
+document.addEventListener("selectionchange",()=>{const t=(getSelection()+"").trim();if(t)lastSel=t});
+function setTab(t){tab=t;pinta()}
+$("tB").onclick=()=>setTab("b");$("tC").onclick=()=>setTab("c");$("tM").onclick=()=>setTab("m");
+document.querySelectorAll(".herr button").forEach(b=>b.addEventListener("pointerdown",e=>e.preventDefault()));
+
+/* Marcar y compartir */
+$("bMarc").onclick=()=>{if(!sel.size)return toast("Toca uno o varios párrafos para seleccionarlos");
+ const n=sel.size;sel.forEach(k=>{M[k]?delete M[k]:M[k]=1});guarda("patmos_marc",M);pinta();toast(n+(n>1?" párrafos actualizados":" párrafo actualizado")+" en tus marcadores")};
+$("bWa").onclick=()=>{const nv=NIVELES[actual];let tx=lastSel&&(getSelection()+"").trim()?lastSel:"";
+ if(!tx){const ps=[...$("pTexto").querySelectorAll("p[data-k]")].filter(p=>sel.has(p.dataset.k));
+  tx=ps.map(p=>"“"+p.textContent.replace(/^★ /,"").replace(/^(BIBLIA|EL CONFLICTO DE LOS SIGLOS)/,"").trim()+"”").join("\n\n")}
+ if(!tx)return toast("Selecciona párrafos (o texto) para compartir");
+ const msg=tx+`\n\n— ${nv.n} (${nv.ref})\nIsla de Patmos · Apocalipsis\n${location.href.split("#")[0]}`;
+ window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank","noopener")};
+
+/* Voz */
+const syn=window.speechSynthesis;let voz=null,cola=[],ci=0,hablando=false,pausa=false,vel=1;
+function voces(){const v=syn.getVoices();voz=v.find(x=>/^es[-_](MX|US|419)/i.test(x.lang))||v.find(x=>x.lang.toLowerCase().startsWith("es"))||null}
+if(syn){voces();syn.onvoiceschanged=voces}
+function habla(){if(!hablando)return;if(ci>=cola.length)return detener();
+ const c=cola[ci];document.querySelectorAll(".leyendo").forEach(x=>x.classList.remove("leyendo"));c.el.classList.add("leyendo");
+ if(ci===0||cola[ci-1].el!==c.el)c.el.scrollIntoView({block:"center",behavior:"smooth"});
+ const u=new SpeechSynthesisUtterance(c.t);u.lang="es-ES";if(voz)u.voice=voz;u.rate=vel;u.onend=()=>{if(hablando){ci++;habla()}};u.onerror=()=>{};syn.speak(u)}
+function detener(){hablando=false;pausa=false;if(syn)syn.cancel();document.querySelectorAll(".leyendo").forEach(x=>x.classList.remove("leyendo"));$("bOir").textContent="🔊 Escuchar"}
+$("bOir").onclick=()=>{if(!syn)return toast("Tu navegador no tiene voz integrada");
+ if(hablando&&!pausa){syn.pause();pausa=true;$("bOir").textContent="▶ Seguir";return}
+ if(hablando&&pausa){syn.resume();pausa=false;$("bOir").textContent="⏸ Pausar";return}
+ let ps=[...$("pTexto").querySelectorAll("p[data-k]")];if(!ps.length)return toast("No hay texto para escuchar");
+ const s=ps.filter(p=>sel.has(p.dataset.k));if(s.length)ps=s;
+ cola=[];ps.forEach(p=>(p.textContent.replace(/^★ /,"").replace(/^(BIBLIA|EL CONFLICTO DE LOS SIGLOS)/,"").match(/[^.!?…]+[.!?…]*\s*/g)||[]).forEach(t=>t.trim()&&cola.push({el:p,t:t.trim()})));
+ ci=0;hablando=true;pausa=false;$("bOir").textContent="⏸ Pausar";habla()};
+$("bParo").onclick=detener;
+$("bVel").onclick=()=>{vel=vel>=1.5?.8:vel===.8?1:vel===1?1.25:1.5;$("bVel").textContent=vel+"×"};
+
+/* Ajustes de lectura */
+$("bAj").onclick=()=>$("aj").classList.toggle("v");
+function ajusta(){const p=$("panel");p.style.setProperty("--fs",cfg.sz+"px");
+ p.style.setProperty("--ff",cfg.f==="sans"?'system-ui,-apple-system,"Segoe UI",Roboto,sans-serif':"var(--texto)");
+ p.classList.toggle("t-claro",cfg.t==="cla");p.classList.toggle("t-estudio",cfg.t==="est");
+ [["mOsc","osc"],["mCla","cla"],["mEst","est"]].forEach(([i,v])=>$(i).classList.toggle("on",cfg.t===v));
+ $("fSerif").classList.toggle("on",cfg.f==="serif");$("fSans").classList.toggle("on",cfg.f==="sans");guarda("patmos_cfg",cfg)}
+$("sMenos").onclick=()=>{cfg.sz=Math.max(14,cfg.sz-2);ajusta()};$("sMas").onclick=()=>{cfg.sz=Math.min(32,cfg.sz+2);ajusta()};
+$("fSerif").onclick=()=>{cfg.f="serif";ajusta()};$("fSans").onclick=()=>{cfg.f="sans";ajusta()};
+$("mOsc").onclick=()=>{cfg.t="osc";ajusta()};$("mCla").onclick=()=>{cfg.t="cla";ajusta()};$("mEst").onclick=()=>{cfg.t="est";ajusta()};ajusta();
+
+/* Panel */
+function abrir(i){actual=i;const nv=NIVELES[i];
+ $("pTitulo").textContent="Nivel "+(i+1)+": "+nv.n;$("pRef").textContent=nv.ref;
+ const v=$("pVideo");v.innerHTML="";const vid=document.createElement("video");vid.controls=true;vid.playsInline=true;vid.preload="metadata";vid.src=nv.video;
+ vid.onerror=()=>{v.innerHTML="<p>Sube tu video a <b>"+nv.video+"</b> en GitHub y aparecerá aquí.</p>"};v.appendChild(vid);
+ tab="b";pinta();$("sig").style.display=i<NIVELES.length-1?"":"none";
+ $("panel").classList.add("abierto");$("panel").scrollTop=0;
+ if(!hechos.includes(i)){hechos.push(i);guarda("patmos_hechos",hechos);marca()}}
+function cerrar(){detener();const v=$("pVideo").querySelector("video");if(v)v.pause();$("panel").classList.remove("abierto");$("pVideo").innerHTML=""}
+$("volver").onclick=cerrar;$("sig").onclick=()=>{const n=actual+1;cerrar();ir(n)};
+addEventListener("pagehide",detener);
+aplica();
+</script>
+</body>
+</html>
