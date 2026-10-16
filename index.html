@@ -14,16 +14,9 @@ button,a{font-family:var(--titulo);cursor:pointer}
 :focus-visible{outline:3px solid var(--oro);outline-offset:3px}
 .btn{display:inline-block;text-decoration:none;text-align:center;border:0;border-radius:999px;padding:16px 34px;font-weight:800;letter-spacing:.08em;font-size:clamp(14px,3.6vw,17px);color:#2a1a05;background:linear-gradient(180deg,#f6dc8e,#c99a2e 55%,#9a7220);box-shadow:0 6px 22px #e8c56a33}
 .btn.hueco{background:transparent;color:var(--oro);border:2px solid var(--oro2);box-shadow:0 0 18px #e8c56a22}
+.btn.wa{background:linear-gradient(180deg,#5eeb8f,#22b05f 55%,#12793f);color:#04210e;box-shadow:0 6px 22px #25d36655}
 .btn:active{transform:scale(.97)}
-
-/* PORTADA */
-#portada{position:fixed;inset:0;z-index:40;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:14px;padding:24px 24px calc(48px + env(safe-area-inset-bottom));background:#000;transition:opacity .9s,visibility .9s}
-#portada.fuera{opacity:0;visibility:hidden}
-#portada img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-#portada::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#000c)}
-#portada .btn{position:relative;z-index:2;width:min(340px,100%)}
-#tituloRespaldo{display:none;position:absolute;top:30%;z-index:1;text-align:center;font:800 clamp(40px,12vw,110px)/1 var(--titulo);color:var(--piedra);text-shadow:0 4px 0 #6b5b45,0 0 40px #e2561b66}
-#tituloRespaldo small{display:block;font-size:.3em;color:var(--fuego);letter-spacing:.3em;margin-top:10px}
+.btn[disabled]{opacity:.55;pointer-events:none}
 
 /* MAPA */
 #mapa{position:fixed;inset:0;touch-action:none;cursor:grab;overflow:hidden;background:radial-gradient(circle at 50% 50%,#0f6f86 0,#0a4a5f 35%,#052a39 65%,#02141d)}
@@ -56,12 +49,26 @@ button,a{font-family:var(--titulo);cursor:pointer}
 .pj img.corre{animation:corre .3s ease-in-out infinite}
 @keyframes resp{50%{transform:scaleY(1.015)}}
 @keyframes corre{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-9px) rotate(5deg)}}
+/* fauna */
+.an{position:absolute;left:0;top:0;width:0;height:0;pointer-events:none;will-change:transform}
+.an .som{position:absolute;left:-13px;top:-4px;width:26px;height:9px;border-radius:50%;background:radial-gradient(#000a,transparent 70%)}
+.an .ani{position:absolute;left:0;top:0;display:block;line-height:1;white-space:nowrap;transform:translate(-50%,-82%);filter:drop-shadow(0 3px 2px #0008)}
+.an .fl{display:block}
+.an .fl.mov{animation:paso .45s ease-in-out infinite}
+@keyframes paso{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.an .fl.aleteo{animation:alet .35s ease-in-out infinite}
+@keyframes alet{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.72)}}
 /* cine */
 .vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 45%,#000b 100%),linear-gradient(160deg,#ffb35a2e,transparent 45%,#1a3a8a2a)}
 .grano{position:absolute;inset:0;pointer-events:none;opacity:.12;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 .nube{position:absolute;pointer-events:none;width:60vmax;height:22vmax;border-radius:50%;background:radial-gradient(#ffffff55,transparent 70%);filter:blur(24px);opacity:.5;animation:nube 90s linear infinite}
 .nube.n2{top:55%;animation-duration:130s;animation-delay:-40s;opacity:.35}
 @keyframes nube{from{left:-70vmax}to{left:110vw}}
+/* lluvia */
+#lluvia{position:fixed;inset:0;width:100%;height:100%;z-index:8;pointer-events:none}
+#tormenta{position:fixed;inset:0;z-index:7;pointer-events:none;background:linear-gradient(#0a1a2c,#13283c);opacity:0;transition:opacity 1.5s}
+#tormenta.v{opacity:.32}
+#rayo{position:fixed;inset:0;z-index:9;pointer-events:none;background:#dce8ff;opacity:0;transition:opacity .5s ease-out}
 .barra{position:fixed;left:0;right:0;height:0;background:#000;z-index:25;transition:height 1.2s}
 .barra.t{top:0}.barra.b{bottom:0}
 body.cine .barra{height:12vh}
@@ -78,8 +85,25 @@ body.cine #hud,body.cine #ctrl,body.cine #ctrl2,body.cine #ayuda{opacity:0;point
 #ctrl,#ctrl2{position:fixed;z-index:10;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;gap:8px}
 #ctrl{right:12px;flex-direction:column}#ctrl2{left:12px}
 #ctrl button,#ctrl2 button{width:48px;height:48px;border-radius:50%;border:2px solid var(--oro2);background:#120b06dd;color:var(--oro);font-size:22px}
+#ctrl2 button.on{background:var(--oro);color:#2a1a05}
 #ayuda{position:fixed;z-index:9;left:50%;transform:translateX(-50%);bottom:calc(22px + env(safe-area-inset-bottom));font-size:13px;color:#d9cfc0cc;background:#000a;padding:6px 14px;border-radius:999px;text-align:center;pointer-events:none;width:max-content;max-width:44vw}
 @media(max-width:600px){#ayuda{display:none}}
+
+/* ALERTA ANTES DE ENTRAR AL NIVEL */
+#pre{position:fixed;inset:0;z-index:30;display:none;align-items:center;justify-content:center;padding:18px;background:#000c;backdrop-filter:blur(6px);overflow-y:auto}
+#pre.v{display:flex;animation:entra .35s ease-out}
+.preCaja{width:min(520px,100%);max-height:100%;overflow-y:auto;text-align:center;background:radial-gradient(circle at 50% 0,#3a2312,#120b06 75%);border:2px solid var(--oro2);border-radius:20px;padding:26px 22px;box-shadow:0 0 60px #e8c56a33}
+.preSello{font-size:44px;line-height:1;margin-bottom:6px;filter:drop-shadow(0 0 14px #e8c56a88)}
+.preCaja h3{font:800 clamp(20px,5.5vw,28px)/1.15 var(--titulo);color:var(--oro);margin-bottom:4px}
+.preCaja .preN{font:600 12px var(--titulo);letter-spacing:.2em;color:var(--fuego);margin-bottom:14px}
+.preOr{font:italic clamp(16px,4.4vw,19px)/1.6 var(--texto);color:var(--piedra);margin-bottom:18px;padding:0 4px}
+.preMs{display:grid;gap:8px;margin-bottom:20px;text-align:left}
+.preM{display:flex;gap:12px;align-items:flex-start;background:#ffffff0a;border:1px solid #a9801f66;border-radius:12px;padding:10px 12px}
+.preM i{font-style:normal;font-size:24px;line-height:1.1;min-width:28px;text-align:center}
+.preM b{display:block;font:800 13px var(--titulo);color:var(--oro);letter-spacing:.06em;margin-bottom:2px}
+.preM span{font-size:14px;line-height:1.45;color:#d9cfc0e6}
+.preBt{display:flex;flex-direction:column;gap:10px}
+.preBt .btn{padding:14px 22px}
 
 /* PANEL */
 #panel{--bg:#120b06;--tx:#d9cfc0;--card:#1b110a;--bd:#a9801f;--tt:#d9cfc0;--fs:19px;--ff:var(--texto);--hl:#e8c56a44;--ac:#e8c56a;
@@ -94,6 +118,8 @@ position:fixed;inset:0;z-index:20;display:none;overflow-y:auto;background:radial
 .marco{border:2px solid var(--bd);border-radius:14px;overflow:hidden;background:#000;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}
 .marco video{width:100%;height:100%;display:block;background:#000}
 .marco p{padding:20px;text-align:center;color:#d9cfc0cc}
+.waFila{display:flex;justify-content:center;margin:14px 0 4px}
+.waFila .btn{width:min(460px,100%);padding:14px 22px}
 .barraH{position:sticky;top:-18px;z-index:3;background:var(--bg);padding-top:14px}
 .tabs{display:flex;gap:6px}
 .tabs button{flex:1;padding:12px 4px;font:800 clamp(11px,3vw,14px) var(--titulo);color:var(--ac);background:var(--card);border:2px solid var(--bd);border-bottom:0;border-radius:12px 12px 0 0}
@@ -117,16 +143,12 @@ position:fixed;inset:0;z-index:20;display:none;overflow-y:auto;background:radial
 .pie{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
 #toast{position:fixed;z-index:50;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);background:#000e;color:var(--oro);border:1px solid var(--oro2);padding:10px 18px;border-radius:999px;font:600 13px var(--titulo);opacity:0;pointer-events:none;transition:opacity .3s;max-width:90vw;text-align:center}
 #toast.v{opacity:1}
-@media(prefers-reduced-motion:reduce){.tela,.pj img,.nube,#agua,.espuma{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.tela,.pj img,.nube,#agua,.espuma,.an .fl{animation:none!important}}
 </style>
+<!-- TUS TEXTOS Y CONFIGURACIÓN ESTÁN EN textos.js (misma carpeta) -->
+<script src="textos.js"></script>
 </head>
 <body>
-
-<section id="portada">
-  <img src="portada.png" alt="Isla de Patmos – Apocalipsis" onerror="this.remove();document.getElementById('tituloRespaldo').style.display='block'">
-  <div id="tituloRespaldo">MAPA ISLA<small>APOCALIPSIS</small></div>
-  <button class="btn" id="entrar">ENTRAR EN EL MAPA</button>
-</section>
 
 <main id="mapa" aria-label="Mapa de la Isla de Patmos">
   <div id="agua"></div>
@@ -134,20 +156,37 @@ position:fixed;inset:0;z-index:20;display:none;overflow-y:auto;background:radial
   <div class="nube"></div><div class="nube n2"></div>
   <div class="vig"></div><div class="grano"></div>
 </main>
+<div id="tormenta"></div><canvas id="lluvia"></canvas><div id="rayo"></div>
 <div class="barra t"></div><div class="barra b"></div>
 <div id="cineT">ISLA DE PATMOS<small>APOCALIPSIS</small></div>
 <header id="hud">
   <h2>ISLA DE PATMOS<small>APOCALIPSIS</small></h2>
   <a class="btn hueco" id="regresar" href="#">REGRESAR</a>
 </header>
-<div id="ctrl2"><button id="rotI" aria-label="Girar a la izquierda">⟲</button><button id="rotD" aria-label="Girar a la derecha">⟳</button></div>
+<div id="ctrl2"><button id="rotI" aria-label="Girar a la izquierda">⟲</button><button id="rotD" aria-label="Girar a la derecha">⟳</button><button id="bLluvia" aria-label="Lluvia" class="on">🌧</button></div>
 <div id="ctrl"><button id="zmas" aria-label="Acercar">+</button><button id="zmenos" aria-label="Alejar">−</button></div>
 <div id="ayuda">Toca una bandera y el explorador correrá hasta ella · arrastra y gira el mapa</div>
+
+<!-- ALERTA: ORACIÓN + MÉTODOS DE APRENDIZAJE -->
+<div id="pre" role="dialog" aria-modal="true" aria-labelledby="preT">
+  <div class="preCaja">
+    <div class="preSello">🙏</div>
+    <h3 id="preT"></h3>
+    <div class="preN" id="preN"></div>
+    <p class="preOr" id="preOr"></p>
+    <div class="preMs" id="preMs"></div>
+    <div class="preBt">
+      <button class="btn" id="preOk">AMÉN · ENTRAR AL NIVEL</button>
+      <button class="btn hueco" id="preNo">AÚN NO</button>
+    </div>
+  </div>
+</div>
 
 <section id="panel">
   <div class="caja">
     <h1 id="pTitulo"></h1><div class="ref" id="pRef"></div>
     <div class="marco" id="pVideo"></div>
+    <div class="waFila"><a class="btn wa" id="waGuia" target="_blank" rel="noopener">💬 Escríbele a tu guía por WhatsApp</a></div>
     <div class="barraH">
       <div class="tabs" role="tablist">
         <button role="tab" id="tB">BIBLIA</button>
@@ -178,250 +217,173 @@ position:fixed;inset:0;z-index:20;display:none;overflow-y:auto;background:radial
 <div id="toast"></div>
 
 <script>
-/* ============ CONFIGURACIÓN (edita aquí) ============ */
-const REGRESAR_URL = "https://robertproductions12-developer.github.io/BATALLADANIEL/";
-const NIVELES = [
- {n:"La visión de Patmos",      ref:"Apocalipsis 1",     video:"videos/nivel1.mp4",  biblia:`La revelación de Jesucristo
-1 La revelación de Jesucristo, que Dios le dio para manifestar a sus siervos las cosas que deben suceder pronto. La declaró enviándola por medio de su ángel a su siervo Juan, 2 el cual ha dado testimonio de la palabra de Dios, del testimonio de Jesucristo y de todas las cosas que ha visto. 3 Bienaventurado el que lee y los que oyen las palabras de esta profecía, y guardan las cosas en ella escritas, porque el tiempo está cerca.
-
-Salutaciones a las siete iglesias
-4 Juan, a las siete iglesias que están en Asia: Gracia y paz a vosotros de parte del que es y que era y que ha de venir, de los siete espíritus que están delante de su trono, 5 y de Jesucristo, el testigo fiel, el primogénito de los muertos y el soberano de los reyes de la tierra. Al que nos ama, nos ha lavado de nuestros pecados con su sangre 6 y nos hizo reyes y sacerdotes para Dios, su Padre, a él sea gloria e imperio por los siglos de los siglos. Amén.
-
-7 He aquí que viene con las nubes:
-Todo ojo lo verá, y los que lo traspasaron;
-y todos los linajes de la tierra se lamentarán por causa de él.
-Sí, amén.
-
-8 «Yo soy el Alfa y la Omega, principio y fin», dice el Señor, el que es y que era y que ha de venir, el Todopoderoso.
-
-Una visión del Hijo del hombre
-9 Yo, Juan, vuestro hermano y compañero en la tribulación, en el reino y en la perseverancia de Jesucristo, estaba en la isla llamada Patmos, por causa de la palabra de Dios y del testimonio de Jesucristo. 10 Estando yo en el Espíritu en el día del Señor oí detrás de mí una gran voz, como de trompeta, 11 que decía: «Yo soy el Alfa y la Omega, el primero y el último. Escribe en un libro lo que ves y envíalo a las siete iglesias que están en Asia: a Éfeso, Esmirna, Pérgamo, Tiatira, Sardis, Filadelfia y Laodicea.»
-
-12 Me volví para ver la voz que hablaba conmigo. Y vuelto, vi siete candelabros de oro, 13 y en medio de los siete candelabros a uno semejante al Hijo del hombre, vestido de una ropa que llegaba hasta los pies, y tenía el pecho ceñido con un cinto de oro. 14 Su cabeza y sus cabellos eran blancos como blanca lana, como nieve; sus ojos, como llama de fuego. 15 Sus pies eran semejantes al bronce pulido, refulgente como en un horno, y su voz como el estruendo de muchas aguas. 16 En su diestra tenía siete estrellas; de su boca salía una espada aguda de dos filos y su rostro era como el sol cuando resplandece con toda su fuerza.
-
-17 Cuando lo vi, caí a sus pies como muerto. Y él puso su diestra sobre mí, diciéndome: «No temas. Yo soy el primero y el último, 18 el que vive. Estuve muerto, pero vivo por los siglos de los siglos, amén. Y tengo las llaves de la muerte y del Hades. 19 Escribe, pues, las cosas que has visto, las que son y las que han de ser después de éstas. 20 Respecto al misterio de las siete estrellas que has visto en mi diestra, y de los siete candelabros de oro: las siete estrellas son los ángeles de las siete iglesias, y los siete candelabros que has visto son las siete iglesias.`, conflicto:`Capítulo 22—Una amonestación rechazada
-Al predicar la doctrina del segundo advenimiento, Guillermo Miller y sus colaboradores no tuvieron otro propósito que el de estimular a los hombres para que se preparasen para el juicio. Habían procurado despertar a los creyentes religiosos que hacían profesión de cristianismo y hacerles comprender la verdadera esperanza de la iglesia y la necesidad que tenían de una experiencia cristiana más profunda; trabajaron además para hacer sentir a los inconversos su deber de arrepentirse y de convertirse a Dios inmediatamente. “No trataron de convertir a los hombres a una secta ni a un partido religioso. De aquí que trabajasen entre todos los partidos y sectas, sin entremeterse en su organización ni disciplina”. 
-
-Miller aseveró: “En todas mis labores nunca abrigué el deseo ni el pensamiento de fomentar interés distinto del de las denominaciones existentes, ni de favorecer a una a expensas de otra. Pensé en ser útil a todas. Suponiendo que todos los cristianos se regocijarían en la perspectiva de la venida de Cristo, y que aquellos que no pudiesen ver las cosas como yo no dejarían por eso de amar a los que aceptasen esta doctrina, no me figuré que habría jamás necesidad de tener reuniones distintas. Mi único objeto era el deseo de convertir almas a Dios, de anunciar al mundo el juicio venidero e inducir a mis semejantes a que hiciesen la preparación de corazón que les permitirá ir en paz al encuentro de su Dios. La gran mayoría de los que fueron convertidos por medio de mi ministerio se unieron a las diversas iglesias existentes”. Bliss, 328. 
-
-Como su obra tendía a la edificación de las iglesias, se la miró durante algún tiempo con simpatía. Pero cuando los ministros y los directores de aquellas se declararon contra la doctrina del advenimiento y quisieron sofocar el nuevo movimiento, no solo se opusieron a ella desde el púlpito, sino que además negaron a sus miembros el derecho de asistir a predicaciones sobre ella y hasta de hablar de sus esperanzas en las reuniones de edificación mutua en la iglesia. Así se vieron reducidos los creyentes a una situación crítica que les causaba perplejidad. Querían a sus iglesias y les repugnaba separarse de ellas; pero al ver que se anulaba el testimonio de la Palabra de Dios, y que se les negaba el derecho que tenían para investigar las profecías, sintieron que la lealtad hacia Dios les impedía someterse. No podían considerar como constituyendo la iglesia de Cristo a los que trataban de rechazar el testimonio de la Palabra de Dios, “columna y apoyo de la verdad”. De ahí que se sintiesen justificados para separarse de la que hasta entonces fuera su comunión religiosa. En el verano de 1844 cerca de cincuenta mil personas se separaron de las iglesias. 
-
-Por aquel tiempo se advirtió un cambio notable en la mayor parte de las iglesias de los Estados Unidos de Norteamérica. Desde hacía muchos años venía observándose una conformidad cada vez mayor con las prácticas y costumbres mundanas, y una decadencia correspondiente en la vida espiritual; pero en aquel año se notó repentinamente una decadencia aún más acentuada en casi todas las iglesias del país. Aunque nadie parecía capaz de indicar la causa de ella, el hecho mismo fue muy notado y comentado, tanto por la prensa como desde el púlpito. 
-
-En una reunión del presbiterio de Filadelfia, el Sr. Barnes, autor de un comentario de uso muy general, y pastor de una de las principales iglesias de dicha ciudad, “declaró que ejercía el ministerio desde hacía veinte años, y que nunca antes de la última comunión había administrado la santa cena sin recibir muchos o pocos nuevos miembros en la iglesia. Pero ahora, añadía, no hay despertamientos, ni conversiones, ni mucho aparente crecimiento en la gracia en los que hacen profesión de religión, y nadie viene más a su despacho para conversar acerca de la salvación de sus almas. Con el aumento de los negocios y las perspectivas florecientes del comercio y de las manufacturas, ha aumentado también el espíritu mundano. Y esto sucede en todas las denominaciones”. Congregational Journal, 23 de mayo de 1844. 
-
-En el mes de febrero del mismo año, el profesor Finney, del colegio de Oberlin, dijo: “Hemos podido comprobar el hecho de que en general las iglesias protestantes de nuestro país, han sido o apáticas u hostiles con respecto a casi todas las reformas morales de la época. Existen excepciones parciales, pero no las suficientes para impedir que el hecho sea general. Tenemos además otro hecho más que confirma lo dicho y es la falta casi universal de influencias reavivadoras en las iglesias. La apatía espiritual lo penetra casi todo y es por demás profunda; así lo atestigua la prensa religiosa de todo el país [...]. De modo muy general, los miembros de las iglesias se están volviendo esclavos de la moda, se asocian con los impíos en diversiones, bailes, festejos, etc. [...]. Pero no necesitamos extendernos largamente sobre tan doloroso tema. Basta con que las pruebas aumenten y nos abrumen para demostrarnos que las iglesias en general están degenerando de un modo que da pena. Se han alejado muchísimo de Dios, y él se ha alejado de ellas”. 
-
-Y un escritor declaraba en el Religious Telescope, conocido periódico religioso: “Jamás habíamos presenciado hasta ahora un estado de decadencia semejante al de la actualidad. En verdad que la iglesia debería despertar y buscar la causa de este estado aflictivo; pues tal debe ser para todo aquel que ama a Sión. Cuando recordamos cuán pocos son los casos de verdadera conversión, y la impenitencia sin igual y la dureza de los pecadores, exclamamos casi involuntariamente: ‘¿Se ha olvidado Dios de tener misericordia? o está cerrada la puerta de la gracia?’” 
-
-Tal condición no existe nunca sin que la iglesia misma tenga la culpa. Las tinieblas espirituales que caen sobre las naciones, sobre las iglesias y sobre los individuos, no se deben a un retraimiento arbitrario de la gracia divina por parte de Dios, sino a la negligencia o al rechazamiento de la luz divina por parte de los hombres. Ejemplo sorprendente de esta verdad lo tenemos en la historia del pueblo judío en tiempo de Cristo. Debido a su apego al mundo y al olvido de Dios y de su Palabra, el entendimiento de este pueblo se había oscurecido y su corazón se había vuelto mundano y sensual. Así permaneció en la ignorancia respecto al advenimiento del Mesías, y en su orgullo e incredulidad rechazó al Redentor. Pero ni aun entonces Dios privó a la nación judía de conocer o participar en las bendiciones de la salvación. Pero los que rechazaron la verdad perdieron todo deseo de obtener el don del cielo. Ellos habían hecho “de la luz tinieblas, y de las tinieblas luz” hasta que la luz que había en ellos se volvió tinieblas; y ¡cuán grandes fueron aquellas tinieblas! 
-
-Conviene a la política de Satanás que los hombres conserven las formas de religión, con tal que carezcan de piedad vital. Después de haber rechazado el evangelio, los judíos siguieron conservando ansiosamente sus antiguos ritos, y guardaron intacto su exclusivismo nacional, mientras que ellos mismos no podían menos que confesar que la presencia de Dios ya no se manifestaba más entre ellos. 
-
-La profecía de Daniel señalaba de modo tan exacto el tiempo de la venida del Mesías y predecía tan a las claras su muerte, que ellos trataban de desalentar el estudio de ella, y finalmente los rabinos pronunciaron una maldición sobre todos los que intentaran computar el tiempo. En su obcecación e impenitencia, el pueblo de Israel ha permanecido durante mil ochocientos años indiferente a los ofrecimientos de salvación gratuita, así como a las bendiciones del evangelio, de modo que constituye una solemne y terrible advertencia del peligro que se corre al rechazar la luz del cielo. 
-
-Dondequiera que esta causa exista, seguirán los mismos resultados. Quien deliberadamente mutila su conciencia del deber porque ella está en pugna con sus inclinaciones, acabará por perder la facultad de distinguir entre la verdad y el error. 
-
-La inteligencia se entenebrece, la conciencia se insensibiliza, el corazón se endurece, y el alma se aparta de Dios. Donde se desdeña o se desprecia la verdad divina, la iglesia se verá envuelta en tinieblas; la fe y el amor se enfriarán, y entrarán el desvío y la disensión. Los miembros de las iglesias concentran entonces sus intereses y energías en asuntos mundanos, y los pecadores se endurecen en su impenitencia. 
-
-El mensaje del primer ángel en el capítulo 14 del Apocalipsis, que anuncia la hora del juicio de Dios y que exhorta a los hombres a que le teman y adoren, tenía por objeto separar de las influencias corruptoras del mundo al pueblo que profesaba ser de Dios y despertarlo para que viera su verdadero estado de mundanalidad y apostasía. Con este mensaje Dios había enviado a la iglesia un aviso que, de ser aceptado, habría curado los males que la tenían apartada de él. Si los cristianos hubiesen recibido el mensaje del cielo, humillándose ante el Señor y tratando sinceramente de prepararse para comparecer ante su presencia, el Espíritu y el poder de Dios se habrían manifestado entre ellos. La iglesia habría vuelto a alcanzar aquel bendito estado de unidad, fe y amor que existía en tiempos apostólicos, cuando “la muchedumbre de los creyentes era de un mismo corazón y de una misma alma”, y “hablaron la Palabra de Dios con denuedo”, cuando “el Señor añadía a la iglesia los salvados, de día en día”. Hechos 4:32, 31; 2:47 (VM). 
-
-Si los que profesan pertenecer a Dios recibiesen la luz tal cual brilla sobre ellos al dimanar de su Palabra, alcanzarían esa unidad por la cual oró Cristo y que el apóstol describe como “la unidad del Espíritu en el vínculo de la paz”. “Hay—dice—un mismo cuerpo, y un mismo espíritu, así como fuisteis llamados en una misma esperanza de vuestra vocación; un mismo Señor, una misma fe, un mismo bautismo”. Efesios 4:3-5 (VM). 
-
-Tales fueron los resultados benditos experimentados por los que aceptaron el mensaje del advenimiento. Provenían de diferentes denominaciones, y sus barreras confesionales cayeron al suelo; los credos opuestos se hicieron añicos; la esperanza antibíblica de un milenio temporal fue abandonada, las ideas erróneas sobre el segundo advenimiento fueron enmendadas, el orgullo y la conformidad con el mundo fueron extirpados; los agravios fueron reparados; los corazones se unieron en la más dulce comunión, y el amor y el gozo reinaban por encima de todo. Si esta doctrina lo hizo para los pocos que la recibieron, habría hecho lo mismo para todos, si todos la hubiesen aceptado. 
-
-Pero las iglesias en general no aceptaron la amonestación. Sus ministros que, como centinelas “a la casa de Israel”, hubieran debido ser los primeros en discernir las señales de la venida de Jesús, no habían aprendido la verdad, fuese por el testimonio de los profetas o por las señales de los tiempos. Como las esperanzas y ambiciones mundanas llenaban su corazón, el amor a Dios y la fe en su Palabra se habían enfriado, y cuando la doctrina del advenimiento fue presentada, solo despertó sus prejuicios e incredulidad. La circunstancia de ser predicado el mensaje mayormente por laicos, se presentaba como argumento desfavorable. Como antiguamente, se oponían al testimonio claro de la Palabra de Dios con la pregunta: “¿Ha creído en él alguno de los príncipes, o de los fariseos?” Y al ver cuán difícil era refutar los argumentos sacados de los pasajes proféticos, muchos dificultaban el estudio de las profecías, enseñando que los libros proféticos estaban sellados y que no se podían entender. Multitudes que confiaban implícitamente en sus pastores, se negaron a escuchar el aviso, y otros, aunque convencidos de la verdad, no se atrevían a proclamarlo para “no ser echados de la sinagoga”. El mensaje que Dios había enviado para probar y purificar la iglesia reveló con exagerada evidencia cuán grande era el número de los que habían concentrado sus afectos en este mundo más bien que en Cristo. Los lazos que los unían a la tierra eran más fuertes que los que les atraían hacia el cielo. Prefirieron escuchar la voz de la sabiduría humana y no hicieron caso del mensaje de verdad destinado a escudriñar los corazones. 
-
-Al rechazar la amonestación del primer ángel, rechazaron los medios que Dios había provisto para su redención. Despreciaron al mensajero misericordioso que habría enmendado los males que los separaban de Dios, y con mayor ardor volvieron a buscar la amistad del mundo. Tal era la causa del terrible estado de mundanalidad, apostasía y muerte espiritual que imperaba en las iglesias en 1844. 
-
-En el capítulo 14 de Apocalipsis, el primer ángel es seguido de otro que dice: “¡Caída, caída es la gran Babilonia, la cual ha hecho que todas las naciones beban del vino de la ira de su fornicación!” Apocalipsis 14:8 (VM). La palabra “Babilonia” deriva de “Babel” y significa confusión. Se emplea en las Santas Escrituras para designar las varias formas de religiones falsas y apóstatas. En el capítulo 17 del Apocalipsis, Babilonia está simbolizada por una mujer, figura que se emplea en la Biblia para representar una iglesia; siendo una mujer virtuosa símbolo de una iglesia pura, y una mujer vil, de una iglesia apóstata. 
-
-En la Biblia, el carácter sagrado y permanente de la relación que existe entre Cristo y su iglesia está representado por la unión del matrimonio. El Señor se ha unido con su pueblo en alianza solemne, prometiendo él ser su Dios, y el pueblo a su vez comprometiéndose a ser suyo y solo suyo. Dios dice: “Te desposaré conmigo para siempre: sí, te desposaré conmigo en justicia, y en rectitud, y en misericordia, y en compasiones”. Oseas 2:19 (VM). Y también: “Yo soy vuestro esposo”. Jeremías 3:14. Y San Pablo emplea la misma figura en el Nuevo Testamento cuando dice: “Os he desposado a un marido, para presentaros como una virgen pura a Cristo”. 2 Corintios 11:2. 
-
-La infidelidad a Cristo de que la iglesia se hizo culpable al dejar enfriarse la confianza y el amor que a él le unieran, y al permitir que el apego a las cosas mundanas llenase su alma, es comparada a la violación del voto matrimonial. El pecado que Israel cometió al apartarse del Señor está representado bajo esta figura; y el amor maravilloso de Dios que ese pueblo despreció, está descrito de modo conmovedor: “Te di juramento y entré en pacto contigo, dice Jehová el Señor; y viniste a ser mía”. “Y fuiste sumamente hermosa, y prosperaste hasta llegar a dignidad real. Y salió tu renombre entre las naciones, en atención a tu hermosura, la cual era perfecta, a causa de mis adornos que yo había puesto sobre ti [...]. Mas pusiste tu confianza en tu hermosura, y te prostituiste a causa de tu renombre”. “Así como una mujer es desleal a su marido, así vosotros habéis sido desleales para conmigo, oh casa de Israel, dice Jehová”. “¡Ah, mujer adúltera, que en vez de tu marido admites los extraños!” Ezequiel 16:8, 13-15, 32; Jeremías 3:20 (VM). 
-
-En el Nuevo Testamento se hace uso de un lenguaje muy parecido para con los cristianos profesos que buscan la amistad del mundo más que el favor de Dios. El apóstol Santiago dice: “¡Almas adúlteras! ¿no sabéis acaso que la amistad del mundo es enemistad contra Dios? Aquel pues que quisiere ser amigo del mundo, se hace enemigo de Dios”. Santiago 4:4 (VM). 
-
-La mujer Babilonia de Apocalipsis 17 está descrita como “vestida de púrpura y escarlata, y adornada de oro y piedras preciosas y perlas, teniendo en su mano un cáliz de oro, lleno de abominaciones, es decir, las inmundicias de sus fornicaciones; y en su frente tenía un nombre escrito: Misterio: Babilonia la grande, madre de las rameras”. El profeta dice: “Vi a aquella mujer embriagada de la sangre de los santos, y de la sangre de los mártires de Jesús”. Se declara además que Babilonia “es aquella gran ciudad, la cual tiene el imperio sobre los reyes de la tierra”. Apocalipsis 17:4-6, 18 (VM). La potencia que por tantos siglos dominó con despotismo sobre los monarcas de la cristiandad, es Roma. La púrpura y la escarlata, el oro y las piedras preciosas y las perlas describen como a lo vivo la magnificencia y la pompa más que reales de que hacía gala la arrogante sede romana. Y de ninguna otra potencia se podría decir con más propiedad que estaba “embriagada de la sangre de los santos” que de aquella iglesia que ha perseguido tan cruelmente a los discípulos de Cristo. Se acusa además a Babilonia de haber tenido relaciones ilícitas con “los reyes de la tierra”. Por su alejamiento del Señor y su alianza con los paganos la iglesia judía se transformó en ramera; Roma se corrompió de igual manera al buscar el apoyo de los poderes mundanos, y por consiguiente recibe la misma condenación. 
-
-Se dice que Babilonia es “madre de las rameras”. Sus hijas deben simbolizar las iglesias que se atienen a sus doctrinas y tradiciones, y siguen su ejemplo sacrificando la verdad y la aprobación de Dios, para formar alianza ilícita con el mundo. El mensaje de Apocalipsis 14, que anuncia la caída de Babilonia, debe aplicarse a comunidades religiosas que un tiempo fueron puras y luego se han corrompido. En vista de que este mensaje sigue al aviso del juicio, debe ser proclamado en los últimos días, y no puede por consiguiente referirse solo a la iglesia romana, pues dicha iglesia está en condición caída desde hace muchos siglos. Además, en el capítulo 18 del Apocalipsis se exhorta al pueblo de Dios a que salga de Babilonia. Según este pasaje de la Escritura, muchos del pueblo de Dios deben estar aún en Babilonia. ¿Y en qué comunidades religiosas se encuentra actualmente la mayoría de los discípulos de Cristo? Sin duda alguna, en las varias iglesias que profesan la fe protestante. Al nacer, esas iglesias se decidieron noblemente por Dios y la verdad, y la bendición divina las acompañó. Aun el mundo incrédulo se vio obligado a reconocer los felices resultados de la aceptación de los principios del evangelio. Se les aplican las palabras del profeta a Israel: “Salió tu renombre entre las naciones, en atención a tu hermosura, la cual era perfecta, a causa de mis adornos, que yo había puesto sobre ti, dice Jehová el Señor”. Pero esas iglesias cayeron víctimas del mismo deseo que causó la maldición y la ruina de Israel: el deseo de imitar las prácticas de los impíos y de buscar su amistad. “Pusiste tu confianza en tu hermosura, y te prostituiste a causa de tu renombre”. Ezequiel 16:14, 15 (VM). 
-
-Muchas de las iglesias protestantes están siguiendo el ejemplo de Roma, y se unen inicuamente con “los reyes de la tierra”. Así obran las iglesias del estado en sus relaciones con los gobiernos seculares, y otras denominaciones en su afán de captarse el favor del mundo. Y la expresión “Babilonia”—confusión—puede aplicarse acertadamente a esas congregaciones que, aunque declaran todas que sus doctrinas derivan de la Biblia, están sin embargo divididas en un sinnúmero de sectas, con credos y teorías muy opuestos. 
-
-Además de la unión pecaminosa con el mundo, las iglesias que se separaron de Roma presentan otras características de esta. 
-
-Una obra católica romana arguye que “si la iglesia romana fue alguna vez culpable de idolatría con respecto a los santos, su hija, la iglesia anglicana, es igualmente culpable, pues tiene diez iglesias dedicadas a María por una dedicada a Cristo”. Dr. Challoner, The Catholic Christian Instructed, prólogo, 21, 22. 
-
-Y el Dr. Hopkins, en un “Tratado sobre el milenio”, declara: “No hay razón para creer que el espíritu y las prácticas anticristianas se limiten a lo que se llama actualmente la iglesia romana. Las iglesias protestantes tienen en sí mucho del Anticristo, y distan mucho de haberse reformado enteramente de [...] las corrupciones e impiedades”. Samuel Hopkins, Works 2:328. 
-
-Respecto a la separación entre la iglesia presbiteriana y la de Roma, el doctor Guthrie escribe: “Hace trescientos años que nuestra iglesia, con una Biblia abierta en su bandera y el lema ‘Escudriñad las Escrituras’ en su rollo de pergamino, salió de las puertas de Roma”. Luego hace la significativa pregunta: “¿Salió del todo de Babilonia?” Thomas Guthrie, The Gospel in Ezekiel, 237. 
-
-“La iglesia de Inglaterra—dice Spurgeon—parece estar completamente roída por la doctrina de que la salvación se encuentra en los sacramentos; pero los disidentes parecen estar tan hondamente contaminados por la incredulidad filosófica. Aquellos de quienes esperábamos mejores cosas están apartándose unos tras otros de los fundamentos de la fe. Creo que el mismo corazón de Inglaterra está completamente carcomido por una incredulidad fatal que hasta se atreve a subir al púlpito y llamarse cristiana”. 
-
-¿Cuál fue el origen de la gran apostasía? ¿Cómo empezó a apartarse la iglesia de la sencillez del evangelio? Conformándose a las prácticas del paganismo para facilitar a los paganos la aceptación del cristianismo. El apóstol Pablo dijo acerca de su propio tiempo: “Ya está obrando el misterio de iniquidad”. 2 Tesalonicenses 2:7. Mientras aún vivían los apóstoles, la iglesia permaneció relativamente pura. “Pero hacia fines del siglo segundo, la mayoría de las iglesias asumieron una forma nueva; la sencillez primitiva desapareció, e insensiblemente, a medida que los antiguos discípulos bajaban a la tumba, sus hijos, en unión con nuevos convertidos, [...] se adelantaron y dieron nueva forma a la causa” (Robert Robinson, Ecclesiastical Researches, capítulo 6, p. 51). Para aumentar el número de los convertidos, se rebajó el alto nivel de la fe cristiana, y el resultado fue que “una ola de paganismo anegó la iglesia, trayendo consigo sus costumbres, sus prácticas y sus ídolos”. Gavazzi, Lectures, 278. Una vez que la religión cristiana hubo ganado el favor y el apoyo de los legisladores seculares, fue aceptada nominalmente por multitudes; pero mientras estas eran cristianas en apariencia, muchos “permanecieron en el fondo paganos que seguían adorando sus ídolos en secreto” (ibíd.). 
-
-¿No ha sucedido otro tanto en casi todas las iglesias que se llaman protestantes? Cuando murieron sus fundadores, que poseían el verdadero espíritu de reforma, sus descendientes se adelantaron y “dieron nueva forma a la causa”. Mientras se atenían ciegamente al credo de sus padres y se negaban a aceptar cualquiera verdad que fuese más allá de lo que veían, los hijos de los reformadores se alejaron mucho de su ejemplo de humildad, de abnegación y de renunciación al mundo. Así “la simplicidad primitiva desaparece”. Una ola de mundanalidad invade la iglesia “trayendo consigo sus costumbres, sus prácticas y sus ídolos”. 
-
-¡Ay, hasta qué grado esa amistad del mundo, que es “enemistad contra Dios”, es fomentada actualmente entre los que profesan ser discípulos de Cristo! ¡Cuánto no se han alejado las iglesias nacionales de toda la cristiandad del modelo bíblico de humildad, abnegación, sencillez y piedad! Juan Wesley decía, al hablar del buen uso del dinero: “No malgastéis nada de tan precioso talento, tan solo por agradar a los ojos con superfluos y costosos atavíos o con adornos innecesarios. No gastéis parte de él adornando prolijamente vuestras casas con muebles inútiles y costosos, con cuadros costosos, pinturas y dorados [...]. No gastéis nada para satisfacer la soberbia de la vida, ni para obtener la admiración de los hombres [...]. ‘Siempre que te halagues a ti mismo, los hombres hablarán bien de ti’. Siempre que te vistas ‘de púrpura y de lino fino blanco, y tengas banquetes espléndidos todos los días, ‘no faltará quien aplauda tu elegancia, tu buen gusto, tu generosidad y tu rumbosa hospitalidad. Pero no vayas a pagar tan caros sus aplausos. Conténtate más bien con el honor que viene de Dios” (Wesley, Works, sermón 50, sobre el uso de dinero). Pero muchas iglesias actuales desprecian estas enseñanzas. 
-
-Está de moda en el mundo hacer profesión de religión. Gobernantes, políticos, abogados, médicos y comerciantes se unen a la iglesia para asegurarse el respeto y la confianza de la sociedad, y así promover sus intereses mundanos. Tratan de cubrir todos sus procederes injustos con el manto de la religiosidad. Las diversas comunidades religiosas robustecidas con las riquezas y con la influencia de esos mundanos bautizados pujan a cual más por mayor popularidad y patrocinio. 
-
-Iglesias magníficas, embellecidas con el más extravagante despilfarro, se yerguen en las avenidas más ricas y más pobladas. Los fieles visten con lujo y a la moda. Se pagan grandes sueldos a ministros elocuentes para que entretengan y atraigan a la gente. Sus sermones no deben aludir a los pecados populares, sino que deben ser suaves y agradables como para los oídos de un auditorio elegante. Así los pecadores del mundo son recibidos en la iglesia, y los pecados de moda se cubren con un manto de piedad. 
-
-Hablando de la actitud actual de los profesos cristianos para con el mundo, un notable periódico profano dice: “Insensiblemente la iglesia ha seguido el espíritu del siglo, y ha adaptado sus formas de culto a las necesidades de la actualidad”. “En verdad, todo cuanto contribuye a hacer atractiva la religión, la iglesia lo emplea ahora y se vale de ello”. Y un escritor apunta, en el Independent de Nueva York, lo siguiente acerca del metodismo actual: “La línea de separación entre los piadosos y los irreligiosos desaparece en una especie de penumbra, y en ambos lados se está trabajando con empeño para hacer desaparecer toda diferencia entre su modo de ser y sus placeres”. “La popularidad de la religión tiende en gran manera a aumentar el número de los que quisieran asegurarse sus beneficios sin cumplir honradamente con los deberes de ella”. 
-
-Howard Crosby dice: “Motivo de hondo pesar es el hecho de que la iglesia de Cristo esté cumpliendo tan mal los designios del Señor. Así como los antiguos judíos dejaron que el trato familiar con las naciones idólatras alejara sus corazones de Dios, [...] así también ahora la iglesia de Jesús, merced al falso consorcio con el mundo incrédulo, está abandonando los métodos divinos de su verdadera vida y doblegándose a las costumbres perniciosas, si bien a menudo plausibles, de una sociedad anticristiana, valiéndose de argumentos y llegando a conclusiones ajenas a la revelación de Dios y directamente opuestas a todo crecimiento en la gracia”. The Healthy Christian: An Appeal to the Church, 141, 142. 
-
-En esta marea de mundanalidad y de afán por los placeres, el espíritu de desprendimiento y de sacrificio personal por el amor de Cristo ha desaparecido casi completamente. “Algunos de los hombres y mujeres que actúan hoy en esas iglesias aprendieron, cuando niños, a hacer sacrificios para poder dar o hacer algo por Cristo”. Pero “ahora si se necesitan fondos, [...] no hay que pedirle nada a nadie. ¡Oh no! Organícese un bazar, prepárese una representación de figuras vivas, una escena Jocosa, una comida al estilo antiguo o a la moderna, cualquier cosa para divertir a la gente”. 
-
-El gobernador Washburn, de Wisconsin, declaró en su mensaje anual, el 9 de enero de 1873: “Parece necesario dictar una ley que obligue a cerrar las escuelas donde se forman jugadores. Se las encuentra por todas partes. Hasta se ven iglesias que (sin saberlo, indudablemente) hacen a veces la obra del diablo. Los conciertos y las representaciones de beneficio, así como las rifas, que se hacen, a veces con fines religiosos o de caridad, pero a menudo con propósitos menos dignos, loterías, premios, etc., no son sino estratagemas para recaudar dinero sin dar un valor correspondiente. No hay nada tan desmoralizador y tan embriagador, especialmente para los jóvenes, como la adquisición de dinero o de propiedad sin trabajo. Si personas respetables toman parte en esas empresas de azar y acallan su conciencia con la reflexión de que el dinero está destinado a un buen fin, nada de raro tiene que la juventud del estado caiga tan a menudo en los hábitos que con casi toda seguridad engendra la afición a los juegos de azar”. 
-
-El espíritu de conformidad con el mundo está invadiendo las iglesias por toda la cristiandad. Robert Atkins, en un sermón predicado en Londres, pinta un cuadro sombrío del decaimiento espiritual que predomina en Inglaterra: “Los hombres verdaderamente justos están desapareciendo de la tierra, sin que a nadie se le importe algo. Los que hoy profesan religiosidad, en todas las iglesias, aman al mundo, se conforman con él, gustan de las comodidades terrenales y aspiran a los honores. Están llamados a sufrir con Cristo, pero retroceden ante el simple oprobio [...]. ¡Apostasía, apostasía, apostasía! es lo que está grabado en el frontis mismo de cada iglesia; y si lo supiesen o sintiesen, habría esperanza; pero ¡ay! lo que se oye decir, es: Rico soy, y estoy lleno de bienes, y nada me falta” (Second Advent Library, folleto no 39). 
-
-El gran pecado de que se acusa a Babilonia es que ha hecho que “todas las naciones beban del vino de la ira de su fornicación”. Esta copa embriagadora que ofrece al mundo representa las falsas doctrinas que ha aceptado como resultado de su unión ilícita con los magnates de la tierra. La amistad con el mundo corrompe su fe, y a su vez Babilonia ejerce influencia corruptora sobre el mundo enseñando doctrinas que están en pugna con las declaraciones más claras de la Sagrada Escritura. 
-
-Roma le negó la Biblia al pueblo y exigió que en su lugar todos aceptasen sus propias enseñanzas. La obra de la Reforma consistió en devolver a los hombres la Palabra de Dios; pero ¿ no se ve acaso que en las iglesias de hoy lo que se enseña a los hombres es a fundar su fe en el credo y en las doctrinas de su iglesia antes que en las Sagradas Escrituras? Hablando de las iglesias protestantes, Carlos Beecher dice: “Retroceden ante cualquier palabra severa que se diga contra sus credos con la misma sensibilidad con que los santos padres se habrían estremecido ante una palabra dura pronunciada contra la veneración creciente que estaban fomentando por los santos y los mártires [...]. Las denominaciones evangélicas protestantes se han atado mutuamente las manos, de tal modo que nadie puede hacerse predicador entre ellas sin haber aceptado primero la autoridad de algún libro aparte de la Biblia [...]. No hay nada de imaginario en la aseveración de que el poder del credo está ahora empezando a proscribir la Biblia tan ciertamente como lo hizo Roma, aunque de un modo más sutil” (sermón sobre la Biblia como credo suficiente, predicado en Fort Wayne, Indiana, el 22 de febrero de 1846). 
-
-Cuando se levantan maestros verdaderos para explicar la Palabra de Dios, levántanse también hombres de saber, ministros que profesan comprender las Santas Escrituras, para denunciar la sana doctrina como si fuera herejía, alejando así a los que buscan la verdad. Si el mundo no estuviese fatalmente embriagado con el vino de Babilonia, multitudes se convencerían y se convertirían por medio del conocimiento de las verdades claras y penetrantes de la Palabra de Dios. Pero la fe religiosa aparece tan confusa y discordante que el pueblo no sabe qué creer ni qué aceptar como verdad. La iglesia es responsable del pecado de impenitencia del mundo. El mensaje del segundo ángel de Apocalipsis 14 fue proclamado por primera vez en el verano de 1844, y se aplicaba entonces más particularmente a las iglesias de los Estados Unidos de Norteamérica, donde la amonestación del juicio había sido también más ampliamente proclamada y más generalmente rechazada, y donde el decaimiento de las iglesias había sido más rápido. Pero el mensaje del segundo ángel no alcanzó su cumplimiento total en 1844. Las iglesias decayeron entonces moralmente por haber rechazado la luz del mensaje del advenimiento; pero este decaimiento no fue completo. A medida que continuaron rechazando las verdades especiales para nuestro tiempo, fueron decayendo más y más. Sin embargo aún no se puede decir: “¡Caída, caída es la gran Babilonia, la cual ha hecho que todas las naciones beban del vino de la ira de su fornicación!” Aún no ha dado de beber a todas las naciones. El espíritu de conformidad con el mundo y de indiferencia hacia las verdades que deben servir de prueba en nuestro tiempo, existe y ha estado ganando terreno en las iglesias protestantes de todos los países de la cristiandad; y estas iglesias están incluidas en la solemne y terrible amonestación del segundo ángel. Pero la apostasía aún no ha culminado. 
-
-La Biblia declara que antes de la venida del Señor, Satanás obrará con todo poder, y con señales, y con maravillas mentirosas, y con todo el artificio de la injusticia”, y que todos aquellos que “no admitieron el amor de la verdad para” ser “salvos”, serán dejados para que reciban “la eficaz operación de error, a fin de que crean a la mentira”. 2 Tesalonicenses 2:9-11 (VM). La caída de Babilonia no será completa sino cuando la iglesia se encuentre en este estado, y la unión de la iglesia con el mundo se haya consumado en toda la cristiandad. El cambio es progresivo, y el cumplimiento perfecto de Apocalipsis 14:8 está aún reservado para lo por venir. 
-
-A pesar de las tinieblas espirituales y del alejamiento de Dios que se observan en las iglesias que constituyen Babilonia, la mayoría de los verdaderos discípulos de Cristo se encuentran aún en el seno de ellas. Muchos de ellos no han oído nunca proclamar las verdades especiales para nuestro tiempo. No pocos están descontentos con su estado actual y tienen sed de más luz. En vano buscan el espíritu de Cristo en las iglesias a las cuales pertenecen. Como estas congregaciones se apartan más y más de la verdad y se van uniendo más y más con el mundo, la diferencia entre ambas categorías de cristianos se irá acentuando hasta quedar consumada la separación. Llegará el día en que los que aman a Dios sobre todas las cosas no podrán permanecer unidos con los que son “amadores de los placeres, más bien que amadores de Dios; teniendo la forma de la piedad, mas negando el poder de ella”. 
-
-El capítulo 18 del Apocalipsis indica el tiempo en que, por haber rechazado la triple amonestación de Apocalipsis 14:16-12, la iglesia alcanzará el estado predicho por el segundo ángel, y el pueblo de Dios que se encontrare aún en Babilonia, será llamado a separarse de la comunión de esta. Este mensaje será el último que se dé al mundo y cumplirá su obra. Cuando los que “no creen a la verdad, sino que se complacen en la injusticia” (2 Tesalonicenses 2:12, VM), sean dejados para sufrir tremendo desengaño y para que crean a la mentira, entonces la luz de la verdad brillará sobre todos aquellos cuyos corazones estén abiertos para recibirla, y todos los hijos del Señor que quedaren en Babilonia, oirán el llamamiento: “¡Salid de ella, pueblo mío!” Apocalipsis 18:4. 
-
-`},
-
- {n:"Las siete iglesias",       ref:"Apocalipsis 2–3",   video:"videos/nivel2.mp4",  biblia:`El mensaje a Éfeso
-2 »Escribe al ángel de la iglesia en Éfeso:
-
-»“El que tiene las siete estrellas en su diestra, el que camina en medio de los siete candelabros de oro, dice esto:
-
-2 »”‘Yo conozco tus obras, tu arduo trabajo y tu perseverancia, y que no puedes soportar a los malos, has probado a los que se dicen ser apóstoles y no lo son, y los has hallado mentirosos. 3 Has sufrido, has sido perseverante, has trabajado arduamente por amor de mi nombre y no has desmayado. 4 Pero tengo contra ti que has dejado tu primer amor. 5 Recuerda, por tanto, de dónde has caído, arrepiéntete y haz las primeras obras, pues si no te arrepientes, pronto vendré a ti y quitaré tu candelabro de su lugar. 6 Pero tienes esto: que aborreces las obras de los nicolaítas, las cuales yo también aborrezco. 7 El que tiene oído, oiga lo que el Espíritu dice a las iglesias. Al vencedor le daré a comer del árbol de la vida, que está en medio del paraíso de Dios.’”
-
-El mensaje a Esmirna
-8 »Escribe al ángel de la iglesia en Esmirna:
-
-»“El primero y el postrero, el que estuvo muerto y vivió, dice esto:
-
-9 »”‘Yo conozco tus obras, tu tribulación, tu pobreza (aunque eres rico) y la blasfemia de los que dicen ser judíos y no lo son, sino que son sinagoga de Satanás. 10 No temas lo que has de padecer. El diablo echará a algunos de vosotros en la cárcel para que seáis probados, y tendréis tribulación por diez días. ¡Sé fiel hasta la muerte y yo te daré la corona de la vida! 11 El que tiene oído, oiga lo que el Espíritu dice a las iglesias. El vencedor no sufrirá daño de la segunda muerte.’”
-
-El mensaje a Pérgamo
-12 »Escribe al ángel de la iglesia en Pérgamo:
-
-»“El que tiene la espada aguda de dos filos dice esto:
-
-13 »”‘Yo conozco tus obras y dónde habitas: donde está el trono de Satanás. Pero retienes mi nombre y no has negado mi fe ni aun en los días en que Antipas, mi testigo fiel, fue muerto entre vosotros, donde habita Satanás. 14 Pero tengo unas pocas cosas contra ti: que tienes ahí a los que retienen la doctrina de Balaam, que enseñaba a Balac a poner tropiezo ante los hijos de Israel, a comer de cosas sacrificadas a los ídolos y a cometer fornicación. 15 Y también tienes a los que retienen la doctrina de los nicolaítas, la que yo aborrezco. 16 Por tanto, arrepiéntete, pues si no, vendré pronto hasta ti y pelearé contra ellos con la espada de mi boca. 17 El que tiene oído, oiga lo que el Espíritu dice a las iglesias. Al vencedor le daré de comer del maná escondido, y le daré una piedrecita blanca y en la piedrecita un nombre nuevo escrito, el cual nadie conoce sino el que lo recibe.’”
-
-El mensaje a Tiatira
-18 »Escribe al ángel de la iglesia en Tiatira:
-
-»“El Hijo de Dios, el que tiene ojos como llama de fuego y pies semejantes al bronce pulido, dice esto:
-
-19 »”‘Yo conozco tus obras, tu amor, tu fe, tu servicio, tu perseverancia y que tus obras postreras son superiores a las primeras. 20 Pero tengo contra ti que toleras que esa mujer Jezabel, que se dice profetisa, enseñe y seduzca a mis siervos para fornicar y para comer cosas sacrificadas a los ídolos. 21 Yo le he dado tiempo para que se arrepienta, pero no quiere arrepentirse de su fornicación. 22 Por tanto, yo la arrojo en cama; y en gran tribulación a los que adulteran con ella, si no se arrepienten de las obras de ella. 23 A sus hijos heriré de muerte y todas las iglesias sabrán que yo soy el que escudriña la mente y el corazón. Os daré a cada uno según vuestras obras. 24 Pero a los demás que están en Tiatira, a cuantos no tienen esa doctrina y no han conocido lo que ellos llaman ‘las profundidades de Satanás’, yo os digo: No os impongo otra carga; 25 pero lo que tenéis, retenedlo hasta que yo venga. 26 Al vencedor que guarde mis obras hasta el fin, yo le daré autoridad sobre las naciones; 27 las regirá con vara de hierro y serán quebradas como un vaso de alfarero; como yo también la he recibido de mi Padre. 28 Y le daré la estrella de la mañana. 29 El que tiene oído, oiga lo que el Espíritu dice a las iglesias. El mensaje a Sardis
-3 »Escribe al ángel de la iglesia en Sardis:
-
-»“El que tiene los siete espíritus de Dios y las siete estrellas dice esto:
-
-»”‘Yo conozco tus obras, que tienes nombre de que vives y estás muerto. 2 Sé vigilante y confirma las otras cosas que están para morir, porque no he hallado tus obras bien acabadas delante de Dios. 3 Acuérdate, pues, de lo que has recibido y oído; guárdalo y arrepiéntete, pues si no velas vendré sobre ti como ladrón y no sabrás a qué hora vendré sobre ti. 4 Pero tienes unas pocas personas en Sardis que no han manchado sus vestiduras y andarán conmigo en vestiduras blancas, porque son dignas. 5 El vencedor será vestido de vestiduras blancas, y no borraré su nombre del libro de la vida, y confesaré su nombre delante de mi Padre y delante de sus ángeles. 6 El que tiene oído, oiga lo que el Espíritu dice a las iglesias.’”
-
-El mensaje a Filadelfia
-7 »Escribe al ángel de la iglesia en Filadelfia:
-
-»“Esto dice el Santo, el Verdadero, el que tiene la llave de David, el que abre y ninguno cierra, y cierra y ninguno abre:
-
-8 »”‘Yo conozco tus obras. Por eso, he puesto delante de ti una puerta abierta, la cual nadie puede cerrar, pues aunque tienes poca fuerza, has guardado mi palabra y no has negado mi nombre. 9 De la sinagoga de Satanás, de los que dicen ser judíos y no lo son, sino que mienten, te daré algunos. Yo haré que vengan y se postren a tus pies reconociendo que yo te he amado. 10 Por cuanto has guardado la palabra de mi paciencia, yo también te guardaré de la hora de la prueba que ha de venir sobre el mundo entero para probar a los que habitan sobre la tierra. 11 Vengo pronto; retén lo que tienes, para que ninguno tome tu corona. 12 Al vencedor yo lo haré columna en el templo de mi Dios y nunca más saldrá de allí. Escribiré sobre él el nombre de mi Dios y el nombre de la ciudad de mi Dios, la nueva Jerusalén, la cual desciende del cielo, con mi Dios, y mi nombre nuevo. 13 El que tiene oído, oiga lo que el Espíritu dice a las iglesias.’”
-
-El mensaje a Laodicea
-14 »Escribe al ángel de la iglesia en Laodicea:
-
-»“El Amén, el testigo fiel y verdadero, el Principio de la creación de Dios, dice esto:
-
-15 »”‘Yo conozco tus obras, que ni eres frío ni caliente. ¡Ojalá fueras frío o caliente! 16 Pero por cuanto eres tibio y no frío ni caliente, te vomitaré de mi boca. 17 Tú dices: Yo soy rico, me he enriquecido y de nada tengo necesidad. Pero no sabes que eres desventurado, miserable, pobre, ciego y estás desnudo. 18 Por tanto, yo te aconsejo que compres de mí oro refinado en el fuego para que seas rico, y vestiduras blancas para vestirte, para que no se descubra la vergüenza de tu desnudez. Y unge tus ojos con colirio para que veas. 19 Yo reprendo y castigo a todos los que amo; sé, pues, celoso y arrepiéntete. 20 Yo estoy a la puerta y llamo; si alguno oye mi voz y abre la puerta, entraré a él y cenaré con él y él conmigo. 21 Al vencedor le concederé que se siente conmigo en mi trono, así como yo he vencido y me he sentado con mi Padre en su trono. 22 El que tiene oído, oiga lo que el Espíritu dice a las iglesias.’”»’”`, conflicto:``},
-
- {n:"El trono y el Cordero",    ref:"Apocalipsis 4–5",   video:"videos/nivel3.mp4",  biblia:``, conflicto:``},
-
- {n:"Los siete sellos",         ref:"Apocalipsis 6",     video:"videos/nivel4.mp4",  biblia:``, conflicto:``},
-
- {n:"Los sellados",             ref:"Apocalipsis 7",     video:"videos/nivel5.mp4",  biblia:``, conflicto:``},
-
- {n:"Las siete trompetas",      ref:"Apocalipsis 8–9",   video:"videos/nivel6.mp4",  biblia:``, conflicto:``},
-
- {n:"El librito y los dos testigos", ref:"Apocalipsis 10–11", video:"videos/nivel7.mp4", biblia:``, conflicto:``},
-
- {n:"La mujer y el dragón",     ref:"Apocalipsis 12",    video:"videos/nivel8.mp4",  biblia:``, conflicto:``},
-
- {n:"Las dos bestias",          ref:"Apocalipsis 13–14", video:"videos/nivel9.mp4",  biblia:``, conflicto:``},
-
- {n:"Las siete plagas",         ref:"Apocalipsis 15–16", video:"videos/nivel10.mp4", biblia:``, conflicto:``},
-
- {n:"Babilonia",                ref:"Apocalipsis 17–18", video:"videos/nivel11.mp4", biblia:``, conflicto:``},
- 
- {n:"Cristo viene y la nueva Jerusalén", ref:"Apocalipsis 19–22", video:"videos/nivel12.mp4", biblia:``, conflicto:``}
-];
-const EXPLORADOR_IMG = "explorador.png";
+/* ============ CONFIGURACIÓN: todo viene de textos.js (aquí solo hay valores de respaldo) ============ */
+const dv=(n,d)=>{try{const v=eval("typeof "+n+"!=='undefined'?"+n+":undefined");return v===undefined?d:v}catch(e){return d}};
+const LV=dv("NIVELES",[]);
+const CFG={
+ regresar:dv("REGRESAR_URL","#"),
+ explorador:dv("EXPLORADOR_IMG","explorador.png"),
+ waNum:dv("WHATSAPP_NUMERO",""),waLink:dv("WHATSAPP_ENLACE",""),
+ waBoton:dv("WHATSAPP_BOTON","Escríbele a tu guía por WhatsApp"),
+ waMsg:dv("WHATSAPP_MENSAJE","Hola, terminé el Nivel {nivel}: {nombre} ({ref})."),
+ oSeg:dv("ORACION_SEGUNDOS",6),
+ oTit:dv("ORACION_TITULO","Antes de entrar, ora"),
+ oTxt:dv("ORACION_TEXTO","Señor, abre mi corazón y graba en mí lo que voy a aprender. En el nombre de Jesús, amén."),
+ metodos:dv("METODOS",[{icono:"★",titulo:"Marca lo que te hable",texto:"Toca un párrafo y guárdalo con ★ Marcar."}])
+};
 /* ====================================================== */
 
 const $=id=>document.getElementById(id),W=1800,C=900,PI=Math.PI;
 const mapa=$("mapa"),mundo=$("mundo");
-$("regresar").href=REGRESAR_URL;
+$("regresar").href=CFG.regresar;
 const guarda=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
 const lee=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 function toast(t){const e=$("toast");e.textContent=t;e.classList.add("v");clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove("v"),2200)}
+if(!LV.length)setTimeout(()=>toast("No se encontró textos.js: súbelo junto a index.html"),1500);
 
-/* --- Isla realista (SVG con relieve y costa irregular) --- */
+/* --- Isla realista (relieve iluminado, costa irregular, montañas con caras, bosque) --- */
 function blob(r,k){const p=[];for(let i=0;i<48;i++){const a=i/48*PI*2;
  const rr=r*(1+.09*Math.sin(3*a+1)+.06*Math.sin(5*a+2)+.04*Math.sin(9*a))*k;p.push([C+rr*Math.cos(a),C+rr*Math.sin(a)])}
  let d="M"+((p[0][0]+p[47][0])/2)+" "+((p[0][1]+p[47][1])/2);
  for(let i=0;i<48;i++){const a=p[i],b=p[(i+1)%48];d+=`Q${a[0]} ${a[1]} ${(a[0]+b[0])/2} ${(a[1]+b[1])/2}`}return d+"Z"}
 let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+const P=a=>a[0].toFixed(1)+" "+a[1].toFixed(1);
+
+const MONTES=[[-90,-60,150],[70,-30,190],[-10,80,130],[160,90,105],[-175,60,100],[-215,-190,88],[215,-175,95]];
+function enMonte(x,y){return MONTES.some(([mx,my,z])=>Math.abs(x-(C+mx))<z*.95&&y>C+my-z*1.05&&y<C+my+z*.75)}
+
+function monte(X,Y,z){
+ const j=()=>rnd()-.5;
+ const pk=[X+j()*z*.14,Y-z],bl=[X-z,Y+z*.6],br=[X+z,Y+z*.6],mb=[X+z*.07,Y+z*.66];
+ let s=`<g filter="url(#roca)"><ellipse cx="${X+z*.5}" cy="${Y+z*.66}" rx="${z*1.25}" ry="${z*.2}" fill="#000" opacity=".38" filter="url(#bl2)"/>`;
+ const sub=(sx,sy,sz)=>`<path d="M${sx-sz} ${sy+sz*.6}L${sx} ${sy-sz}L${sx+sz*.07} ${sy+sz*.66}Z" fill="url(#mL)"/><path d="M${sx+sz*.07} ${sy+sz*.66}L${sx} ${sy-sz}L${sx+sz} ${sy+sz*.6}Z" fill="url(#mD)"/>`;
+ s+=sub(X-z*.62,Y+z*.18,z*.52)+sub(X+z*.66,Y+z*.2,z*.46);
+ s+=`<path d="M${P(bl)}L${P(pk)}L${P(mb)}Z" fill="url(#mL)"/><path d="M${P(mb)}L${P(pk)}L${P(br)}Z" fill="url(#mD)"/>`;
+ for(let k=0;k<6;k++){const t=.25+k*.13+j()*.06,a=lerp(pk,bl,t*.8),b=[a[0]+(mb[0]-a[0])*(.25+rnd()*.5)-z*.1*j(),Y+z*.62];
+  s+=`<path d="M${P(a)}L${P(b)}" stroke="#000" stroke-opacity=".2" stroke-width="${2+rnd()*2}" fill="none"/>`}
+ for(let k=0;k<5;k++){const a=lerp(pk,br,.12+k*.15),b=[a[0]-z*(.05+rnd()*.35),Y+z*.62];
+  s+=`<path d="M${P(a)}L${P(b)}" stroke="#000" stroke-opacity=".3" stroke-width="${2+rnd()*2}" fill="none"/>`}
+ s+=`<path d="M${P(pk)}L${P(mb)}" stroke="#fff" stroke-opacity=".18" stroke-width="2.5" fill="none"/>`;
+ const L1=lerp(pk,bl,.34),R1=lerp(pk,br,.34),M1=lerp(pk,mb,.4);
+ s+=`<path d="M${P(pk)}L${P(L1)}L${L1[0]+(M1[0]-L1[0])*.3} ${L1[1]+z*.09}L${L1[0]+(M1[0]-L1[0])*.55} ${L1[1]-z*.02}L${L1[0]+(M1[0]-L1[0])*.8} ${L1[1]+z*.08}L${P(M1)}Z" fill="#f6f2e8"/>`;
+ s+=`<path d="M${P(pk)}L${P(M1)}L${M1[0]+(R1[0]-M1[0])*.3} ${M1[1]+z*.07}L${M1[0]+(R1[0]-M1[0])*.6} ${M1[1]-z*.02}L${M1[0]+(R1[0]-M1[0])*.85} ${R1[1]+z*.08}L${P(R1)}Z" fill="#a9b9d2"/></g>`;
+ return s}
+
+function pino(x,y,z){return `<ellipse cx="${x+z*.6}" cy="${y}" rx="${z*.9}" ry="${z*.32}" fill="#000" opacity=".3"/><rect x="${x-z*.1}" y="${y-z*.5}" width="${z*.2}" height="${z*.5}" fill="#4a3320"/><path d="M${x-z*.75} ${y-z*.4}L${x} ${y-z*1.7}L${x+z*.75} ${y-z*.4}Z" fill="#17492b"/><path d="M${x-z*.6} ${y-z}L${x} ${y-z*2.2}L${x+z*.6} ${y-z}Z" fill="#1f6238"/><path d="M${x} ${y-z*2.2}L${x+z*.6} ${y-z}L${x+z*.1} ${y-z}Z" fill="#0f3a20" opacity=".55"/>`}
+function arbol(x,y,z){return `<ellipse cx="${x+z*.7}" cy="${y}" rx="${z}" ry="${z*.35}" fill="#000" opacity=".3"/><rect x="${x-z*.12}" y="${y-z*.7}" width="${z*.24}" height="${z*.7}" fill="#4f3822"/><circle cx="${x}" cy="${y-z*1.2}" r="${z*.95}" fill="#2a6e3a"/><circle cx="${x-z*.3}" cy="${y-z*1.5}" r="${z*.6}" fill="#4a9a52"/><circle cx="${x+z*.35}" cy="${y-z}" r="${z*.45}" fill="#1d5a30" opacity=".7"/>`}
+function casa(x,y,s,techo){const h=s*.9;return `<ellipse cx="${x+s*.7}" cy="${y+s*.3}" rx="${s*1.1}" ry="${s*.4}" fill="#000" opacity=".3"/>
+<path d="M${x-s} ${y-h}L${x} ${y-h+s*.5}L${x} ${y+s*.5}L${x-s} ${y}Z" fill="#fbfaf5"/><path d="M${x} ${y-h+s*.5}L${x+s} ${y-h}L${x+s} ${y}L${x} ${y+s*.5}Z" fill="#c7ced6"/>
+<path d="M${x} ${y-h-s*.5}L${x+s} ${y-h}L${x} ${y-h+s*.5}L${x-s} ${y-h}Z" fill="${techo}"/>`}
+function monasterio(x,y){return `<ellipse cx="${x+14}" cy="${y+6}" rx="46" ry="9" fill="#000" opacity=".35"/>
+<rect x="${x-28}" y="${y-18}" width="56" height="22" fill="#f1ece0"/><rect x="${x-28}" y="${y-18}" width="56" height="4" fill="#cbc3b0"/>
+<rect x="${x-34}" y="${y-34}" width="13" height="38" fill="#ebe5d6"/><rect x="${x+21}" y="${y-34}" width="13" height="38" fill="#d2cbb9"/>
+<path d="M${x-12} ${y-18}a12 12 0 0 1 24 0z" fill="#2a6fb8"/><rect x="${x-1.5}" y="${y-36}" width="3" height="10" fill="#e8c56a"/><rect x="${x-5}" y="${y-32}" width="10" height="3" fill="#e8c56a"/>
+<rect x="${x-5}" y="${y-8}" width="10" height="12" fill="#3a2a1a"/>`}
+
 let s=`<svg viewBox="0 0 ${W} ${W}" aria-hidden="true"><defs>
 <filter id="rug" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".011" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="46"/></filter>
-<filter id="ter" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".007" numOctaves="5" seed="9" result="n"/>
-<feColorMatrix in="n" type="matrix" values="0 0 0 0 .02  0 0 0 0 .09  0 0 0 0 .02  1.9 0 0 0 -.62" result="osc"/>
-<feColorMatrix in="n" type="matrix" values="0 0 0 0 .55  0 0 0 0 .8  0 0 0 0 .3  0 -1.8 0 0 .6" result="luz"/>
-<feComposite in="osc" in2="SourceAlpha" operator="in" result="o"/><feComposite in="luz" in2="SourceAlpha" operator="in" result="l"/>
-<feMerge><feMergeNode in="SourceGraphic"/><feMergeNode in="o"/><feMergeNode in="l"/></feMerge></filter>
+<filter id="ter" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+ <feTurbulence type="fractalNoise" baseFrequency=".0075" numOctaves="6" seed="9" result="n"/>
+ <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1.5 0 0 0 -.1" result="alt"/>
+ <feDiffuseLighting in="alt" surfaceScale="70" diffuseConstant="1.7" lighting-color="#ffffff" result="luz"><feDistantLight azimuth="225" elevation="40"/></feDiffuseLighting>
+ <feColorMatrix in="n" type="matrix" values="0 0 0 0 .52  0 0 0 0 .44  0 0 0 0 .32  0 3.2 0 0 -1.85" result="roca"/>
+ <feColorMatrix in="n" type="matrix" values="0 0 0 0 .62  0 0 0 0 .76  0 0 0 0 .3  0 0 -3 0 1.15" result="pasto"/>
+ <feMerge result="col"><feMergeNode in="SourceGraphic"/><feMergeNode in="pasto"/><feMergeNode in="roca"/></feMerge>
+ <feBlend in="col" in2="luz" mode="multiply" result="m"/><feComposite in="m" in2="SourceAlpha" operator="in"/></filter>
+<filter id="roca" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".05" numOctaves="3" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="7"/></filter>
 <filter id="bl"><feGaussianBlur stdDeviation="16"/></filter><filter id="bl2"><feGaussianBlur stdDeviation="3"/></filter>
-<radialGradient id="gm"><stop offset="0" stop-color="#3f9a5a"/><stop offset=".65" stop-color="#2a7a47"/><stop offset="1" stop-color="#1b5535"/></radialGradient></defs>
-<g filter="url(#bl)"><path d="${blob(690,1.2)}" fill="#35c0d4" opacity=".55"/></g>
+<linearGradient id="mL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e2d8c4"/><stop offset=".55" stop-color="#a39a86"/><stop offset="1" stop-color="#6d6655"/></linearGradient>
+<linearGradient id="mD" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6f6858"/><stop offset=".6" stop-color="#3d382e"/><stop offset="1" stop-color="#1e1b15"/></linearGradient>
+<radialGradient id="gm"><stop offset="0" stop-color="#4aa35e"/><stop offset=".6" stop-color="#2f8049"/><stop offset="1" stop-color="#1b5535"/></radialGradient></defs>
+<g filter="url(#bl)"><path d="${blob(690,1.32)}" fill="#35c0d4" opacity=".5"/></g>
+<g filter="url(#bl)"><path d="${blob(690,1.15)}" fill="#7ae8e8" opacity=".45"/></g>
 <path d="${blob(690,1.03)}" transform="translate(24 30)" fill="#000" opacity=".4" filter="url(#bl)"/>
-<g filter="url(#rug)"><path d="${blob(690,1.08)}" fill="#46c6d6" opacity=".7"/>
+<g filter="url(#rug)"><path d="${blob(690,1.08)}" fill="#52d0dc" opacity=".75"/>
 <path class="espuma" d="${blob(690,1.04)}" fill="none" stroke="#fff" stroke-width="7" stroke-dasharray="34 16" opacity=".75"/>
-<path d="${blob(690,1)}" fill="#e8d29a"/><path d="${blob(690,.95)}" fill="#c9a866" opacity=".5"/>
-<path d="${blob(690,.9)}" fill="url(#gm)" filter="url(#ter)"/></g>`;
-[[-90,-60,150],[70,-30,190],[-10,80,130],[160,90,105],[-175,60,100]].forEach(([x,y,z])=>{const X=C+x,Y=C+y;
- s+=`<ellipse cx="${X+z*.35}" cy="${Y+z*.62}" rx="${z*1.1}" ry="${z*.2}" fill="#000" opacity=".35" filter="url(#bl2)"/>
- <path d="M${X-z} ${Y+z*.6}L${X} ${Y-z}L${X+z*.08} ${Y+z*.62}Z" fill="#a8a193"/>
- <path d="M${X+z*.04} ${Y+z*.62}L${X} ${Y-z}L${X+z} ${Y+z*.6}Z" fill="#555046"/>
- <path d="M${X-z*.3} ${Y-z*.48}L${X} ${Y-z}L${X+z*.04} ${Y-z*.55}Z" fill="#f4efe4"/><path d="M${X+z*.04} ${Y-z*.55}L${X} ${Y-z}L${X+z*.3} ${Y-z*.48}Z" fill="#b7c2d4"/>`});
-for(let i=0;i<150;i++){const a=rnd()*PI*2,r=230+rnd()*400,x=C+r*Math.cos(a),y=C+r*Math.sin(a),z=11+rnd()*14;
- s+=`<ellipse cx="${x+6}" cy="${y+z*.8}" rx="${z}" ry="${z*.4}" fill="#000" opacity=".3"/><circle cx="${x}" cy="${y}" r="${z}" fill="#1d5a30"/><circle cx="${x-z*.3}" cy="${y-z*.3}" r="${z*.6}" fill="#3c8a4a"/>`}
-for(let i=0;i<14;i++){const a=i/14*PI*2+.2,r=610+rnd()*30;s+=`<text x="${C+r*Math.cos(a)}" y="${C+r*Math.sin(a)}" font-size="34" text-anchor="middle">🌴</text>`}
+<path d="${blob(690,1)}" fill="#ecd9a2"/><path d="${blob(690,.95)}" fill="#cfae6c" opacity=".55"/>
+<path d="${blob(690,.9)}" fill="url(#gm)" filter="url(#ter)"/></g>
+<g fill="none" stroke-linecap="round"><path d="M${C-10} ${C-20}Q${C-110} ${C-200} ${C-60} ${C-340}T${C-150} ${C-610}" stroke="#2b8fb8" stroke-width="10" opacity=".85"/><path d="M${C-10} ${C-20}Q${C-110} ${C-200} ${C-60} ${C-340}T${C-150} ${C-610}" stroke="#8fe3f2" stroke-width="3.5" opacity=".9"/>
+<path d="M${C+40} ${C+60}Q${C+160} ${C+200} ${C+120} ${C+330}T${C+250} ${C+590}" stroke="#2b8fb8" stroke-width="8" opacity=".85"/><path d="M${C+40} ${C+60}Q${C+160} ${C+200} ${C+120} ${C+330}T${C+250} ${C+590}" stroke="#8fe3f2" stroke-width="3" opacity=".9"/></g>`;
+/* objetos ordenados por profundidad (los de abajo se dibujan encima) */
+const OBJ=[];
+MONTES.forEach(([x,y,z])=>OBJ.push([C+y+z*.6,monte(C+x,C+y,z)]));
+OBJ.push([C-60+.6*150+.5,monasterio(C-90,C-198)]);
+for(let i=0;i<190;i++){const a=rnd()*PI*2,r=200+rnd()*410,x=C+r*Math.cos(a),y=C+r*Math.sin(a),z=9+rnd()*9;
+ if(enMonte(x,y))continue;OBJ.push([y,rnd()<.55?pino(x,y,z):arbol(x,y,z)])}
+for(let i=0;i<9;i++){const x=C+60+(i%3)*38+rnd()*14,y=C+250+Math.floor(i/3)*30+rnd()*10;OBJ.push([y,casa(x,y,13+rnd()*5,rnd()<.3?"#2a6fb8":"#fbfaf5")])}
+OBJ.sort((a,b)=>a[0]-b[0]);OBJ.forEach(o=>s+=o[1]);
+for(let i=0;i<16;i++){const a=i/16*PI*2+.2,r=612+rnd()*34;s+=`<ellipse cx="${C+r*Math.cos(a)+4}" cy="${C+r*Math.sin(a)+4}" rx="16" ry="5" fill="#000" opacity=".25"/><text x="${C+r*Math.cos(a)}" y="${C+r*Math.sin(a)}" font-size="34" text-anchor="middle">🌴</text>`}
 s+="</svg>";mundo.innerHTML=s;
 
 /* --- Banderas --- */
 const pos=[];
-NIVELES.forEach((nv,i)=>{
+LV.forEach((nv,i)=>{
  const a=-PI/2+i/12*PI*2,r=(i%2?470:350)+(i%3)*25,x=C+r*Math.cos(a),y=C+r*Math.sin(a);pos.push([x,y]);
  const b=document.createElement("button");b.className="bandera";b.style.left=x+"px";b.style.top=y+"px";
  b.setAttribute("aria-label","Nivel "+(i+1)+": "+nv.n);
  b.innerHTML=`<div class="giro"><i class="base"></i><i class="mastil"></i><i class="tela" style="--d:${-(i*.27).toFixed(2)}s">${i+1}</i><span class="nombre"><b>NIVEL ${i+1}</b><em>${nv.n}</em></span></div>`;
  b.onclick=()=>{if(!moved)ir(i)};mundo.appendChild(b)});
-mundo.querySelector("svg").insertAdjacentHTML("beforeend",`<path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#6b4a22" stroke-opacity=".55" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#f0d68a" stroke-opacity=".7" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>`);
+if(pos.length)mundo.querySelector("svg").insertAdjacentHTML("beforeend",`<path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#6b4a22" stroke-opacity=".55" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/><path d="M${pos.map(p=>p.join(" ")).join("L")}" fill="none" stroke="#f0d68a" stroke-opacity=".7" stroke-width="3" stroke-dasharray="3 14" stroke-linecap="round"/>`);
 
 /* --- Explorador --- */
 let ex=C,ey=C+640;
 const pj=document.createElement("div");pj.className="pj";
-pj.innerHTML=`<div class="giro"><i class="sombra"></i><div class="flip"><img alt="Explorador" src="${EXPLORADOR_IMG}"></div></div>`;
+pj.innerHTML=`<div class="giro"><i class="sombra"></i><div class="flip"><img alt="Explorador" src="${CFG.explorador}"></div></div>`;
 mundo.appendChild(pj);const flip=pj.querySelector(".flip"),pimg=pj.querySelector("img");
 function colocaPJ(){pj.style.left=ex+"px";pj.style.top=ey+"px"}colocaPJ();
+
+/* --- Fauna: animales de tierra, mar y aire --- */
+const FAU=[];
+function crea(emoji,sz,tipo,extra){const w=document.createElement("div");w.className="an";
+ w.innerHTML=`<div class="giro">${tipo==="a"?"":'<i class="som"></i>'}<span class="ani" style="font-size:${sz}px"><span class="fl${tipo==="a"?" aleteo":""}">${emoji}</span></span></div>`;
+ mundo.appendChild(w);const o=Object.assign({w,fl:w.querySelector(".fl"),tipo,x:C,y:C,tx:C,ty:C,v:20,wait:0,ang:rnd()*PI*2},extra||{});FAU.push(o);return o}
+function ptTierra(){const a=rnd()*PI*2,r=100+rnd()*420;return[C+r*Math.cos(a),C+r*Math.sin(a)]}
+function nuevoDestino(o){let tx,ty,t=0;do{const a=rnd()*PI*2,d=60+rnd()*140;tx=o.x+d*Math.cos(a);ty=o.y+d*Math.sin(a);t++}while(Math.hypot(tx-C,ty-C)>540&&t<8);
+ if(Math.hypot(tx-C,ty-C)>540)[tx,ty]=ptTierra();o.tx=tx;o.ty=ty}
+[["🦌",30,3,16],["🐑",24,5,12],["🐐",24,3,15],["🐇",20,3,26],["🦊",22,1,22]].forEach(([e,sz,n,v])=>{
+ for(let i=0;i<n;i++){const o=crea(e,sz,"t",{v:v+rnd()*6});[o.x,o.y]=ptTierra();nuevoDestino(o);o.wait=rnd()*3000}});
+[["🐬",30,3,770,.07,true],["🐋",50,1,830,.03],["⛵",38,2,800,.025],["🐬",26,2,860,-.06,true],["🐟",20,3,740,.09]].forEach(([e,sz,n,R,v,salta])=>{
+ for(let i=0;i<n;i++)crea(e,sz,"m",{r:R+rnd()*50,v:v*(i%2?-1:1),salta:!!salta,ph:rnd()*6})});
+[["🕊️",26,4,.22],["🦅",32,2,.14],["🕊️",22,2,.3]].forEach(([e,sz,n,v])=>{
+ for(let i=0;i<n;i++)crea(e,sz,"a",{rx:360+rnd()*320,ry:240+rnd()*260,v:v*(i%2?-1:1),rot:rnd()*PI,alt:70+rnd()*50,ph:rnd()*6})});
+const giros=[...mundo.querySelectorAll(".giro")];
+let tPrev=performance.now();
+function faunaLoop(t){requestAnimationFrame(faunaLoop);const dt=Math.min(50,t-tPrev);tPrev=t;
+ if($("panel").classList.contains("abierto"))return;
+ FAU.forEach(o=>{let y0=0;
+  if(o.tipo==="t"){
+   if(o.wait>0){o.wait-=dt;o.fl.classList.remove("mov")}
+   else{const dx=o.tx-o.x,dy=o.ty-o.y,d=Math.hypot(dx,dy);
+    if(d<3){o.wait=1500+rnd()*4500;nuevoDestino(o)}
+    else{const k=o.v*dt/1000;o.x+=dx/d*k;o.y+=dy/d*k;o.fl.classList.add("mov");o.fl.style.scale=dx<0?"1 1":"-1 1"}}}
+  else if(o.tipo==="m"){o.ang+=o.v*dt/1000;const r=o.r+Math.sin(o.ang*4+o.ph)*14,nx=C+r*Math.cos(o.ang),ny=C+r*Math.sin(o.ang);
+   o.fl.style.scale=(nx-o.x)<0?"1 1":"-1 1";o.x=nx;o.y=ny;if(o.salta)y0=-Math.max(0,Math.sin(o.ang*11+o.ph))*26}
+  else{o.ang+=o.v*dt/1000;const ca=Math.cos(o.rot),sa=Math.sin(o.rot),ux=o.rx*Math.cos(o.ang),uy=o.ry*Math.sin(o.ang),
+   nx=C+ux*ca-uy*sa,ny=C+ux*sa+uy*ca;o.fl.style.scale=(nx-o.x)<0?"1 1":"-1 1";o.x=nx;o.y=ny;y0=-o.alt-Math.sin(o.ang*3+o.ph)*8}
+  o.w.style.transform=`translate(${o.x.toFixed(1)}px,${(o.y+y0).toFixed(1)}px)`})}
+requestAnimationFrame(faunaLoop);
+
+/* --- Lluvia y relámpagos --- */
+const lc=$("lluvia"),lx=lc.getContext("2d");
+let lluvia=!matchMedia("(prefers-reduced-motion:reduce)").matches,gotas=[];
+function ajustaLluvia(){lc.width=innerWidth;lc.height=innerHeight;const n=Math.min(320,Math.floor(innerWidth*innerHeight/4200));
+ gotas=Array.from({length:n},()=>({x:Math.random()*lc.width,y:Math.random()*lc.height,l:10+Math.random()*16,v:14+Math.random()*10}))}
+ajustaLluvia();addEventListener("resize",ajustaLluvia);
+function estadoLluvia(){$("bLluvia").classList.toggle("on",lluvia);$("tormenta").classList.toggle("v",lluvia);if(!lluvia)lx.clearRect(0,0,lc.width,lc.height)}
+$("bLluvia").onclick=()=>{lluvia=!lluvia;estadoLluvia();toast(lluvia?"Lluvia activada":"Lluvia desactivada")};
+function bucleLluvia(){requestAnimationFrame(bucleLluvia);if(!lluvia)return;
+ lx.clearRect(0,0,lc.width,lc.height);lx.strokeStyle="rgba(200,228,255,.42)";lx.lineWidth=1.2;lx.beginPath();
+ for(const g of gotas){lx.moveTo(g.x,g.y);lx.lineTo(g.x-g.l*.25,g.y+g.l);g.y+=g.v;g.x-=g.v*.25;if(g.y>lc.height){g.y=-20;g.x=Math.random()*(lc.width+120)}}
+ lx.stroke();
+ if(Math.random()<.0014){const r=$("rayo");r.style.transition="none";r.style.opacity=".65";setTimeout(()=>{r.style.transition="opacity .5s ease-out";r.style.opacity="0"},70)}}
+estadoLluvia();bucleLluvia();
 
 /* --- Cámara --- */
 let tx=0,ty=0,rot=0,sc=.8,moved=false,ocupado=false;
 function aplica(){const m=W*sc*.5;tx=Math.max(-m,Math.min(m,tx));ty=Math.max(-m,Math.min(m,ty));sc=Math.max(.35,Math.min(2.4,sc));
  mundo.style.transform=`translate(${tx}px,${ty}px) rotate(${rot}deg) scale(${sc})`;
- const k=1/Math.max(.7,sc);mundo.querySelectorAll(".giro").forEach(g=>g.style.transform=`rotate(${-rot}deg) scale(${k})`)}
+ const k=1/Math.max(.7,sc),tr=`rotate(${-rot}deg) scale(${k})`;for(let i=0;i<giros.length;i++)giros[i].style.transform=tr}
 function centra(px,py){const c=Math.cos(rot*PI/180),n=Math.sin(rot*PI/180),X=px-C,Y=py-C;tx=-sc*(c*X-n*Y);ty=-sc*(n*X+c*Y)}
 const ptrs=new Map();let g0=null;
 mapa.addEventListener("pointerdown",e=>{if(ocupado){cineSkip=true;return}ptrs.set(e.pointerId,[e.clientX,e.clientY]);moved=false;g0=null});
@@ -435,7 +397,8 @@ mapa.addEventListener("pointerup",fin);mapa.addEventListener("pointercancel",fin
 mapa.addEventListener("wheel",e=>{e.preventDefault();if(e.shiftKey)rot+=e.deltaY*.1;else sc*=e.deltaY<0?1.08:.92;aplica()},{passive:false});
 $("rotI").onclick=()=>{rot-=30;aplica()};$("rotD").onclick=()=>{rot+=30;aplica()};
 $("zmas").onclick=()=>{sc*=1.2;aplica()};$("zmenos").onclick=()=>{sc/=1.2;aplica()};
-addEventListener("keydown",e=>{if($("panel").classList.contains("abierto")){if(e.key==="Escape")cerrar();return}
+addEventListener("keydown",e=>{if($("pre").classList.contains("v")){if(e.key==="Escape")cierraPre(false);return}
+ if($("panel").classList.contains("abierto")){if(e.key==="Escape")cerrar();return}
  const k={ArrowLeft:()=>tx+=60,ArrowRight:()=>tx-=60,ArrowUp:()=>ty+=60,ArrowDown:()=>ty-=60,q:()=>rot-=15,e:()=>rot+=15}[e.key];if(k){k();aplica()}});
 
 /* --- Correr hacia la bandera --- */
@@ -446,7 +409,20 @@ function corre(x,y,fn){const dx=x-ex,dy=y-ey,d=Math.hypot(dx,dy);if(d<15)return 
   if(sc<1)sc+=(1.05-sc)*.04;centra(ex,ey);aplica();
   if(k<1)requestAnimationFrame(f);else{pimg.classList.remove("corre");fn()}})(t0)}
 function ir(i){if(ocupado)return;ocupado=true;const[x,y]=pos[i];
- corre(x+40,y+18,()=>{setTimeout(()=>{ocupado=false;abrir(i)},250)})}
+ corre(x+40,y+18,()=>{setTimeout(()=>{pre(i)},250)})}
+
+/* --- Alerta antes de entrar: oración + métodos de aprendizaje --- */
+let preI=0,preT=null;
+function pre(i){preI=i;const nv=LV[i];
+ $("preT").textContent=CFG.oTit;$("preN").textContent="NIVEL "+(i+1)+" · "+nv.n.toUpperCase();$("preOr").textContent="“"+CFG.oTxt+"”";
+ const m=[...CFG.metodos].sort(()=>Math.random()-.5).slice(0,3);
+ $("preMs").innerHTML=m.map(o=>`<div class="preM"><i>${o.icono}</i><div><b>${o.titulo}</b><span>${o.texto}</span></div></div>`).join("");
+ const ok=$("preOk");let seg=Math.max(0,+CFG.oSeg||0);clearInterval(preT);
+ const txt=()=>{ok.disabled=seg>0;ok.textContent=seg>0?"ORANDO… "+seg:"AMÉN · ENTRAR AL NIVEL"};txt();
+ if(seg>0)preT=setInterval(()=>{seg--;txt();if(seg<=0)clearInterval(preT)},1000);
+ $("pre").classList.add("v");$("pre").scrollTop=0}
+function cierraPre(entrar){clearInterval(preT);$("pre").classList.remove("v");ocupado=false;if(entrar)abrir(preI)}
+$("preOk").onclick=()=>cierraPre(true);$("preNo").onclick=()=>cierraPre(false);
 
 /* --- Cinemática de inicio --- */
 let cineSkip=false;
@@ -456,15 +432,14 @@ function cine(){ocupado=true;cineSkip=false;document.body.classList.add("cine");
  (function f(t){let k=Math.min(1,(t-t0)/D);if(cineSkip)k=1;const e=ease(k);
   rot=R0*(1-e);sc=S0+(S1-S0)*e;centra(C+(ex-C)*e,C+(ey-C)*e);aplica();
   if(k<1)requestAnimationFrame(f);else{ocupado=false;document.body.classList.remove("cine");$("cineT").classList.remove("v");toast("Toca una bandera para comenzar")}})(t0)}
-$("entrar").onclick=()=>{$("portada").classList.add("fuera");rot=-35;sc=.38;tx=ty=0;aplica();cine()};
 
 /* --- Estado de lectura --- */
 let hechos=lee("patmos_hechos",[]),M=lee("patmos_marc",{}),cfg=Object.assign({sz:19,f:"serif",t:"osc"},lee("patmos_cfg",{}));
 let actual=0,tab="b",sel=new Set(),lastSel="";
 const marca=()=>mundo.querySelectorAll(".bandera").forEach((b,i)=>b.classList.toggle("hecho",hechos.includes(i)));marca();
-const partes=t=>t.trim()?t.trim().split(/\n\s*\n/):[];
-function items(){const nv=NIVELES[actual],L=[];
- const add=(t,src,txt)=>partes(txt).forEach((p,i)=>{const k=actual+"|"+t+"|"+i;if(t==="m"||true)L.push({k,p,t,src})});
+const limpia=t=>(t||"").split("\n").filter(l=>!/^\s*PEGA AQUÍ/.test(l)).join("\n");
+const partes=t=>{t=limpia(t);return t.trim()?t.trim().split(/\n\s*\n/):[]};
+function items(){const nv=LV[actual],L=[];
  if(tab==="b")partes(nv.biblia).forEach((p,i)=>L.push({k:actual+"|b|"+i,p}));
  else if(tab==="c")partes(nv.conflicto).forEach((p,i)=>L.push({k:actual+"|c|"+i,p}));
  else{partes(nv.biblia).forEach((p,i)=>{const k=actual+"|b|"+i;if(M[k])L.push({k,p,src:"BIBLIA"})});
@@ -473,10 +448,10 @@ function items(){const nv=NIVELES[actual],L=[];
 const esc=t=>t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\n/g,"<br>");
 function pinta(){detener();sel.clear();const L=items(),a=$("pTexto");
  ["tB","tC","tM"].forEach((id,j)=>$(id).setAttribute("aria-selected",id==={b:"tB",c:"tC",m:"tM"}[tab]));
- if(!L.length){a.innerHTML=`<p class="vacio">${tab==="m"?"Aún no marcaste nada. Toca un párrafo en BIBLIA o EL CONFLICTO y pulsa ★ Marcar.":"Aquí irá el texto de este nivel. Edítalo en el archivo index.html."}</p>`;return}
+ if(!L.length){a.innerHTML=`<p class="vacio">${tab==="m"?"Aún no marcaste nada. Toca un párrafo en BIBLIA o EL CONFLICTO y pulsa ★ Marcar.":"Aquí irá el texto de este nivel. Edítalo en el archivo textos.js."}</p>`;return}
  a.innerHTML=L.map(o=>`<p data-k="${o.k}" class="${M[o.k]?"marc":""}">${o.src?`<small>${o.src}</small>`:""}${esc(o.p)}</p>`).join("")}
-a:{$("pTexto").addEventListener("click",e=>{const p=e.target.closest("p[data-k]");if(!p||(getSelection()+"").length>0)return;
- const k=p.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);p.classList.toggle("sel",sel.has(k));$("bMarc").classList.toggle("on",sel.size>0)})}
+$("pTexto").addEventListener("click",e=>{const p=e.target.closest("p[data-k]");if(!p||(getSelection()+"").length>0)return;
+ const k=p.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);p.classList.toggle("sel",sel.has(k));$("bMarc").classList.toggle("on",sel.size>0)});
 document.addEventListener("selectionchange",()=>{const t=(getSelection()+"").trim();if(t)lastSel=t});
 function setTab(t){tab=t;pinta()}
 $("tB").onclick=()=>setTab("b");$("tC").onclick=()=>setTab("c");$("tM").onclick=()=>setTab("m");
@@ -485,12 +460,18 @@ document.querySelectorAll(".herr button").forEach(b=>b.addEventListener("pointer
 /* Marcar y compartir */
 $("bMarc").onclick=()=>{if(!sel.size)return toast("Toca uno o varios párrafos para seleccionarlos");
  const n=sel.size;sel.forEach(k=>{M[k]?delete M[k]:M[k]=1});guarda("patmos_marc",M);pinta();toast(n+(n>1?" párrafos actualizados":" párrafo actualizado")+" en tus marcadores")};
-$("bWa").onclick=()=>{const nv=NIVELES[actual];let tx=lastSel&&(getSelection()+"").trim()?lastSel:"";
+$("bWa").onclick=()=>{const nv=LV[actual];let tx=lastSel&&(getSelection()+"").trim()?lastSel:"";
  if(!tx){const ps=[...$("pTexto").querySelectorAll("p[data-k]")].filter(p=>sel.has(p.dataset.k));
   tx=ps.map(p=>"“"+p.textContent.replace(/^★ /,"").replace(/^(BIBLIA|EL CONFLICTO DE LOS SIGLOS)/,"").trim()+"”").join("\n\n")}
  if(!tx)return toast("Selecciona párrafos (o texto) para compartir");
  const msg=tx+`\n\n— ${nv.n} (${nv.ref})\nIsla de Patmos · Apocalipsis\n${location.href.split("#")[0]}`;
  window.open("https://wa.me/?text="+encodeURIComponent(msg),"_blank","noopener")};
+
+/* Botón de WhatsApp hacia el guía (debajo del video) */
+function enlaceGuia(i){const nv=LV[i];if(nv.enlace)return nv.enlace;if(!nv.whatsapp&&CFG.waLink)return CFG.waLink;
+ const num=(nv.whatsapp||CFG.waNum||"").replace(/\D/g,"");
+ const msg=CFG.waMsg.replace("{nivel}",i+1).replace("{nombre}",nv.n).replace("{ref}",nv.ref);
+ return "https://wa.me/"+num+"?text="+encodeURIComponent(msg)}
 
 /* Voz */
 const syn=window.speechSynthesis;let voz=null,cola=[],ci=0,hablando=false,pausa=false,vel=1;
@@ -523,17 +504,20 @@ $("fSerif").onclick=()=>{cfg.f="serif";ajusta()};$("fSans").onclick=()=>{cfg.f="
 $("mOsc").onclick=()=>{cfg.t="osc";ajusta()};$("mCla").onclick=()=>{cfg.t="cla";ajusta()};$("mEst").onclick=()=>{cfg.t="est";ajusta()};ajusta();
 
 /* Panel */
-function abrir(i){actual=i;const nv=NIVELES[i];
+function abrir(i){actual=i;const nv=LV[i];
  $("pTitulo").textContent="Nivel "+(i+1)+": "+nv.n;$("pRef").textContent=nv.ref;
  const v=$("pVideo");v.innerHTML="";const vid=document.createElement("video");vid.controls=true;vid.playsInline=true;vid.preload="metadata";vid.src=nv.video;
  vid.onerror=()=>{v.innerHTML="<p>Sube tu video a <b>"+nv.video+"</b> en GitHub y aparecerá aquí.</p>"};v.appendChild(vid);
- tab="b";pinta();$("sig").style.display=i<NIVELES.length-1?"":"none";
+ const wa=$("waGuia");wa.href=enlaceGuia(i);wa.textContent="💬 "+CFG.waBoton;
+ tab="b";pinta();$("sig").style.display=i<LV.length-1?"":"none";
  $("panel").classList.add("abierto");$("panel").scrollTop=0;
  if(!hechos.includes(i)){hechos.push(i);guarda("patmos_hechos",hechos);marca()}}
 function cerrar(){detener();const v=$("pVideo").querySelector("video");if(v)v.pause();$("panel").classList.remove("abierto");$("pVideo").innerHTML=""}
 $("volver").onclick=cerrar;$("sig").onclick=()=>{const n=actual+1;cerrar();ir(n)};
 addEventListener("pagehide",detener);
-aplica();
+
+/* --- Inicio: el mapa se abre de inmediato con la cinemática --- */
+rot=-35;sc=.38;aplica();cine();
 </script>
 </body>
 </html>
