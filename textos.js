@@ -70,7 +70,7 @@ const METODOS = [
 const NIVELES = [
 
 /* ───────────────────────── NIVEL 1 ───────────────────────── */
-{ n:"VISIÓN", ref:"Apocalipsis 1", video:"videos/nivel1.mp4",
+{ n:"VISIÓN", ref:"Apocalipsis 1 CS CAP 24", video:"videos/nivel1.mp4",
   whatsapp:"", enlace:"",
   biblia:`
 
